@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">jake_the_dog</string>
+    <string name="feed_button">FEED</string>
+    <string name="clean_button">CLEAN</string>
+    <string name="water_button">WATER</string>
+    <string name="play_button">PLAY</string>
+    <string name="stats_button">STATS</string>
+    <string name="back_button">BACK</string>
+    <string name="toast_dead">OH NO JAKE DIED!</string>
+    <string name="stats_hunger">Hunger Stats are sitting at: </string>
+    <string name="stats_thirst">Thirst Stats are sitting at: </string>
+    <string name="stats_clean">Clean Stats are sitting at: </string>
+    <string name="stats_bored">Bored Stats are sitting at: </string>
+</resources>
