@@ -1,5 +1,5 @@
-# Tamagotchi Emulator - Android
-A small tamagotchi emulator in its initial stages. 
+# Dog Emulator - Android
+A small dog emulator in its initial stages (based roughly on Tamagotchi's from the 90's). 
 
 The stats of hunger and thirst tick away with time and eventually kill off the digial animal. 
 
