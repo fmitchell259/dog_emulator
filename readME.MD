@@ -1,4 +1,4 @@
-A small tmagotchi emulator in its initial stages. 
+A small tamagotchi emulator in its initial stages. 
 
 The stats of hunger and thirst tick away with time and eventually kill off the digial animal. 
 
