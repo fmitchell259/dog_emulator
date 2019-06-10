@@ -58,19 +58,56 @@
         app:layout_constraintTop_toBottomOf="@+id/thirst_stat" />
 
     <TextView
-        android:id="@+id/hunger_show_text"
+        android:id="@+id/bored_show_text"
         android:layout_width="148dp"
         android:layout_height="52dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginBottom="28dp"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/text_colour"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bored_stat" />
+
+    <TextView
+        android:id="@+id/thirst_show_text"
+        android:layout_width="148dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="48dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/text_colour"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/thirst_stat"
+        app:layout_constraintTop_toBottomOf="@+id/hunger_show_text" />
+
+    <TextView
+        android:id="@+id/clean_show_text"
+        android:layout_width="148dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginBottom="56dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/text_colour"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/bored_show_text"
+        app:layout_constraintStart_toEndOf="@+id/clean_stat" />
+
+    <TextView
+        android:id="@+id/hunger_show_text"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/text_colour"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/thirst_show_text"
         app:layout_constraintStart_toEndOf="@+id/hunger_stat"
         app:layout_constraintTop_toTopOf="parent" />
 

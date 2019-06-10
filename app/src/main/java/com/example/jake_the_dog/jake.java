@@ -2,9 +2,51 @@ package com.example.jake_the_dog;
 
 // Jake has to have some animation within it.
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-public class jake {
+public class jake implements Parcelable {
+
+    protected jake(Parcel in) {
+        m_hunger = in.readInt();
+        m_thirst = in.readInt();
+        m_clean = in.readInt();
+        m_bored = in.readInt();
+        m_tired = in.readInt();
+        is_alive = in.readByte() != 0;
+    }
+
+    public static final Creator<jake> CREATOR = new Creator<jake>() {
+        @Override
+        public jake createFromParcel(Parcel in) {
+            return new jake(in);
+        }
+
+        @Override
+        public jake[] newArray(int size) {
+            return new jake[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(m_hunger);
+        dest.writeInt(m_thirst);
+        dest.writeInt(m_clean);
+        dest.writeInt(m_bored);
+        dest.writeInt(m_tired);
+        dest.writeInt( is_alive ? 1: 0);
+    }
+
+    // End of Parcelable methods needed in order to implement Parcelable.
+
+    // Beginning of declarations of member variables and methods for onCreate.
 
     private int m_hunger, m_thirst,
                 m_clean, m_bored,
@@ -145,8 +187,6 @@ public class jake {
         // TODO: This is a future update where we can train the dogs from puppies to do different
         //       tricks. Such as fetch, roll over and lie down, all using gestures.
     }
-
-
 
 
 }

@@ -1,10 +1,12 @@
 package com.example.jake_the_dog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
@@ -26,9 +28,35 @@ public class stat_screen_controller extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.stats_screen);
+
+        // Set my back_button and dog_reference straight away.
+
         final TextView hunger_field = (TextView) findViewById(R.id.hunger_show_text);
+        final TextView thirst_field = (TextView) findViewById(R.id.thirst_show_text);
+        final TextView bored_field = (TextView) findViewById(R.id.bored_show_text);
+        final TextView clean_field = (TextView) findViewById(R.id.clean_show_text);
 
         Button back_button = (Button) findViewById(R.id.back_button);
+        jake fresh_dog = getIntent().getExtras().getParcelable("fresh_dog");
+
+
+        // Next retrieve all of the dogds stats with an @Nullable decorator to ensure
+        // nullPointerException is covered.
+
+        @Nullable
+        int fresh_hung = fresh_dog.getM_hunger();
+        @Nullable
+        int fresh_thirst = fresh_dog.getM_thirst();
+        @Nullable
+        int fresh_bored = fresh_dog.getM_bored();
+        @Nullable
+        int fresh_clean = fresh_dog.getM_clean();
+
+
+        hunger_field.setText(" " + fresh_hung);
+        thirst_field.setText(" " + fresh_thirst);
+        bored_field.setText(" " + fresh_bored);
+        clean_field.setText(" " + fresh_clean);
 
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override

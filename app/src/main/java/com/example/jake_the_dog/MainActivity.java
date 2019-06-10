@@ -1,6 +1,5 @@
 package com.example.jake_the_dog;
 
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -220,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent stat_intent = new Intent(MainActivity.this, stat_screen_controller.class);
-
+                stat_intent.putExtra("fresh_dog", fresh_dog);
                 startActivity(stat_intent);
 
             }
