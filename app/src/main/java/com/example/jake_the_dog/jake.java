@@ -117,11 +117,15 @@ public class jake implements Parcelable {
         this.m_bored += m_bored;
     }
 
+
     // Set Tired is only going to be used when NO USER INTERACTION occurs.
 
     public void setM_tired(int m_tired) {
         this.m_tired += m_tired;
     }
+
+
+    // Animation methods.
 
     public void jake_explodes() {
 
@@ -135,8 +139,6 @@ public class jake implements Parcelable {
         Log.d("Jake", "Oh No your dog DIED!");
 
     }
-
-    // Animation methods, can add methods that just affect the logic for now.
 
     public void come_alive() {
 

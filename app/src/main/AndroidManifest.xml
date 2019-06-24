@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".stat_screen_controller"></activity>
+        <activity android:name=".stat_screen_controller"
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.NoActionBar">

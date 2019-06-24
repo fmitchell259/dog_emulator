@@ -11,4 +11,5 @@
     <string name="stats_thirst">Thirst Stats are sitting at: </string>
     <string name="stats_clean">Clean Stats are sitting at: </string>
     <string name="stats_bored">Bored Stats are sitting at: </string>
+    <string name="background_test">A tester background</string>
 </resources>

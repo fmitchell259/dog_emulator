@@ -25,12 +25,12 @@ public class stat_screen_controller extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
+        // Then we launch into the regular set-up calls for onCreate().
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.stats_screen);
 
         // Set my back_button and dog_reference straight away.
-
         final TextView hunger_field = (TextView) findViewById(R.id.hunger_show_text);
         final TextView thirst_field = (TextView) findViewById(R.id.thirst_show_text);
         final TextView bored_field = (TextView) findViewById(R.id.bored_show_text);

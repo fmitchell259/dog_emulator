@@ -174,9 +174,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Jake", "You pressed the WATER button.");
                 Log.d("Jake", "The dogs thirst is: " + fresh_dog.getM_thirst());
 
-                int thirt_thresh = fresh_dog.getM_thirst();
+                int thirst_thresh = fresh_dog.getM_thirst();
 
-                if (thirt_thresh >= 250) {
+                if (thirst_thresh >= 250) {
                     Log.d("Jake", "oh No! Jake is drowning in Pee!");
                     fresh_dog.jake_drowns();
                     Toast explode_toast = Toast.makeText(getApplicationContext(), "You can't water any more" +
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                     toast_handle.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "Thirst to: " + fresh_dog.getM_hunger(),
+                            Toast.makeText(getApplicationContext(), "Thirst to: " + fresh_dog.getM_thirst(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }, 2700);
