@@ -96,13 +96,12 @@
         android:id="@+id/animation_window"
         android:layout_width="196dp"
         android:layout_height="152dp"
+        android:layout_marginBottom="92dp"
         android:contentDescription="@string/animation_window"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/test_background"
-        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="@+id/test_background"
-        app:layout_constraintTop_toTopOf="@+id/test_background"
-        app:layout_constraintVertical_bias="0.629"
         app:srcCompat="@android:color/transparent"
         tools:srcCompat="@drawable/start_dog" />
 
