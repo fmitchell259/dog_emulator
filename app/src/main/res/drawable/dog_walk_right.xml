@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable= "@drawable/dogwalk1_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk2_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk3_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk4_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk5_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk6_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk7_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk8_right"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/dogwalk9_right"
+        android:duration= "62" />
+
+
+</animation-list>

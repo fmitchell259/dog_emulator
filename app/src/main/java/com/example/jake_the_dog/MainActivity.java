@@ -36,24 +36,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void walk_dog() {
 
-        // TODO: Construct two handlers that delay walking backwards and forwards.
-        // TODO: Add random element for him to stop randomly and bark.
-
         final ImageView animate_walk = (ImageView) findViewById(R.id.animation_window);
-        final ObjectAnimator move_to_side = ObjectAnimator.ofFloat(animate_walk, "translationX", -800f);
+        final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", -800f);
+        final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", 800f);
 
         animate_walk.setImageResource(R.drawable.dog_walk);
-        move_to_side.setDuration(2000);
+        move_to_left.setDuration(2000);
+        move_to_right.setDuration(2000);
 
         final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
-
         final Handler handle = new Handler();
+
         walking_dog.start();
-        move_to_side.start();
+        move_to_left.start();
+
         handle.postDelayed(new Runnable() {
             @Override
             public void run() {
-                animate_walk.setImageResource(R.drawable.start_dog);
+                animate_walk.setImageResource(R.drawable.dog_walk_right);
+                AnimationDrawable walk_right = (AnimationDrawable) animate_walk.getDrawable();
+                walk_right.start();
+                move_to_right.start();
             }
         }, 2000);
 
