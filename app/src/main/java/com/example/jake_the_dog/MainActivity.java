@@ -4,8 +4,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.concurrent.ExecutorService;
@@ -30,6 +33,21 @@ public class MainActivity extends AppCompatActivity {
     Button stats_button;
 
     // Global dead_toast function to be called from within onCreate.
+
+    public void walk_dog() {
+
+        final ImageView animate_walk = (ImageView) findViewById(R.id.animation_window);
+        ObjectAnimator move_to_side = ObjectAnimator.ofFloat(animate_walk, "translationX", 1f);
+
+        animate_walk.setImageResource(R.drawable.dog_walk);
+        move_to_side.setDuration(2000);
+
+        final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
+
+        walking_dog.start();
+        move_to_side.start();
+
+    }
 
     public void dead_toast() {
 
@@ -87,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
         clean_button = findViewById(R.id.clean_button);
         stats_button = findViewById(R.id.stats_button);
 
+        final ImageView start_dog = (ImageView) findViewById(R.id.animation_window);
+        start_dog.setImageResource(R.drawable.start_dog);
+
         final time_thread time = new time_thread(fresh_dog);
 
         // Set up thread pool to deal with a single task, the time_thread.
@@ -127,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
         feed_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                start_dog.setImageResource(R.drawable.start_dog);
 
                 Log.d("Jake", "FEED BUTTON PRESSED!");
                 Log.d("Jake", "Jakes hunger is " + fresh_dog.getM_hunger());
@@ -174,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Jake", "You pressed the WATER button.");
                 Log.d("Jake", "The dogs thirst is: " + fresh_dog.getM_thirst());
 
+                start_dog.setImageResource(R.drawable.start_dog);
+
                 int thirst_thresh = fresh_dog.getM_thirst();
 
                 if (thirst_thresh >= 250) {
@@ -210,6 +235,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
+
+            }
+        });
+
+        play_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                walk_dog();
 
             }
         });

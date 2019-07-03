@@ -6,6 +6,7 @@
     <string name="play_button">PLAY</string>
     <string name="stats_button">STATS</string>
     <string name="back_button">BACK</string>
+    <string name="animation_window">Animation window</string>
     <string name="toast_dead">OH NO JAKE DIED!</string>
     <string name="stats_hunger">Hunger Stats are sitting at: </string>
     <string name="stats_thirst">Thirst Stats are sitting at: </string>
