@@ -2,11 +2,19 @@ package com.example.jake_the_dog;
 
 // Jake has to have some animation within it.
 
+import android.Manifest;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public class jake implements Parcelable {
+
 
     protected jake(Parcel in) {
         m_hunger = in.readInt();
@@ -52,17 +60,20 @@ public class jake implements Parcelable {
                 m_clean, m_bored,
                 m_tired;
 
+    private MainActivity act;
 
     private boolean is_alive;
 
     // Basic constructor for jake, he starts with 100.
 
-    jake() {
+    jake(MainActivity parent_active) {
         m_hunger = 100;
         m_bored = 100;
         m_clean = 100;
         m_thirst = 100;
         m_tired = 100;
+        act = parent_active;
+
 
     }
 
@@ -92,7 +103,7 @@ public class jake implements Parcelable {
         return m_tired;
     }
 
-    public void setM_hunger(int m_hunger) {
+    public void setM_hunger(double m_hunger) {
 
         if (this.m_hunger < 25) {
             this.is_alive = false;
@@ -105,15 +116,15 @@ public class jake implements Parcelable {
         }
     }
 
-    public void setM_thirst(int m_thirst) {
+    public void setM_thirst(double m_thirst) {
         this.m_thirst += m_thirst;
     }
 
-    public void setM_clean(int m_clean) {
+    public void setM_clean(double m_clean) {
         this.m_clean += m_clean;
     }
 
-    public void setM_bored(int m_bored) {
+    public void setM_bored(double m_bored) {
         this.m_bored += m_bored;
     }
 
@@ -188,6 +199,28 @@ public class jake implements Parcelable {
 
         // TODO: This is a future update where we can train the dogs from puppies to do different
         //       tricks. Such as fetch, roll over and lie down, all using gestures.
+    }
+
+    public void walk_dog_left() {
+
+        act.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                act.walk_left();
+            }
+        });
+
+    }
+
+    public void walk_dog_right() {
+
+        act.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                act.walk_right();
+            }
+        });
+
     }
 
 

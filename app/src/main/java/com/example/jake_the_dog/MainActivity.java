@@ -1,5 +1,6 @@
 package com.example.jake_the_dog;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,10 +15,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -32,34 +35,56 @@ public class MainActivity extends AppCompatActivity {
     Button clean_button;
     Button stats_button;
 
-    // Global dead_toast function to be called from within onCreate.
+    public void move_right(ImageView animate_walk) {
 
-    public void walk_dog() {
+        final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", 150f);
+        move_to_right.start();
+    }
+
+    public void move_left(ImageView animate_walk) {
+
+        final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", -150f);
+        move_to_left.setDuration(1000);
+        move_to_left.start();
+
+    }
+
+    public void walk_right() {
 
         final ImageView animate_walk = (ImageView) findViewById(R.id.animation_window);
-        final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", -800f);
-        final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", 800f);
-
-        animate_walk.setImageResource(R.drawable.dog_walk);
-        move_to_left.setDuration(2000);
-        move_to_right.setDuration(2000);
-
+        animate_walk.setImageResource(R.drawable.dog_walk_right);
         final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
         final Handler handle = new Handler();
 
         walking_dog.start();
-        move_to_left.start();
+        move_right(animate_walk);
 
         handle.postDelayed(new Runnable() {
             @Override
             public void run() {
-                animate_walk.setImageResource(R.drawable.dog_walk_right);
-                AnimationDrawable walk_right = (AnimationDrawable) animate_walk.getDrawable();
-                walk_right.start();
-                move_to_right.start();
-            }
-        }, 2000);
+                animate_walk.setImageResource(R.drawable.start_dog);
 
+            }
+        }, 1000);
+    }
+
+    public void walk_left() {
+
+        final ImageView animate_walk = (ImageView) findViewById(R.id.animation_window);
+        animate_walk.setImageResource(R.drawable.dog_walk);
+        final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
+        final Handler handle = new Handler();
+
+        walking_dog.start();
+        move_left(animate_walk);
+
+        handle.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                animate_walk.setImageResource(R.drawable.start_dog);
+
+            }
+        }, 1000);
     }
 
     public void dead_toast() {
@@ -109,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        fresh_dog = new jake();
+        fresh_dog = new jake(this);
         fresh_dog.come_alive();
 
         feed_button = findViewById(R.id.feed_button);
@@ -123,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
         final time_thread time = new time_thread(fresh_dog);
 
+        MainActivity _mActivity = new MainActivity();
+
         // Set up thread pool to deal with a single task, the time_thread.
         // When it is constructed we give it a task and run!
 
@@ -135,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 time.run();
-                walk_dog();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -256,7 +282,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                walk_dog();
 
             }
         });

@@ -7,6 +7,9 @@ A separate time thread that will keep track of the minutes going by.
 package com.example.jake_the_dog;
 
 import android.util.Log;
+import android.widget.ImageView;
+
+import java.util.Random;
 
 public class time_thread implements Runnable {
 
@@ -29,9 +32,10 @@ public class time_thread implements Runnable {
 
     // In the future this will be controlled with a WHILE loop.
 
-    // TODO: Java for beginners WHILE loop revision.
-
     public void run() {
+
+        int r_mod;
+        int r_dir;
 
         Log.d("Jake", "Starting Time Thread....");
 
@@ -41,6 +45,32 @@ public class time_thread implements Runnable {
 
                 Log.d("Jake", "jake is alive: " + passed_dog.ask_alive());
 
+                // Set up variables for a random modulo and random direction number.
+                // These variables dictate when and in what direction Jake moves.
+
+                int low_rand_mod = 2;
+                int high_rand_mod = 25;
+
+                int low_rand_dir = 0;
+                int high_rand_dir = 5000;
+
+                Random rand_modulo = new Random();
+                Random rand_direction = new Random();
+
+                r_mod = rand_modulo.nextInt(high_rand_mod-low_rand_mod) + low_rand_mod;
+                r_dir = rand_direction.nextInt(high_rand_dir-low_rand_dir) + low_rand_dir;
+
+                if (sec_count % r_mod == 0) {
+
+                    if(r_dir <= 2500) {
+
+                        passed_dog.walk_dog_left();
+                    }
+                    else {
+                        passed_dog.walk_dog_right();
+                    }
+                }
+
                 if (!passed_dog.ask_alive()) {
                     passed_dog.jake_dead();
                     break;
@@ -48,18 +78,12 @@ public class time_thread implements Runnable {
 
                 if (sec_count % 2 == 0) {
 
-                    passed_dog.setM_hunger(-5);
-                    passed_dog.setM_thirst(-5);
-                    passed_dog.setM_clean(-5);
-                    passed_dog.setM_bored(-5);
-                }
+                    passed_dog.setM_hunger(-0.5);
+                    passed_dog.setM_thirst(-0.5);
+                    passed_dog.setM_clean(-0.5);
+                    passed_dog.setM_bored(-0.5);
 
-                if (sec_count % 10 == 0) {
 
-                    Log.d("Jake", "Dog HUNGER IS: " + passed_dog.getM_hunger());
-                    Log.d("Jake", "Dog THIRST IS: " + passed_dog.getM_thirst());
-                    Log.d("Jake", "Dog CLEAN IS: " + passed_dog.getM_clean());
-                    Log.d("Jake", "Dog BORED IS: " + passed_dog.getM_bored());
                 }
 
                 Thread.sleep(1000);
