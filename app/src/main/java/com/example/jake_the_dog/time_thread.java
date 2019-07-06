@@ -36,14 +36,13 @@ public class time_thread implements Runnable {
 
         int r_mod;
         int r_dir;
+        int r_scratch;
 
         Log.d("Jake", "Starting Time Thread....");
 
         try {
 
-            for (int sec_count=0; sec_count < 240; sec_count++) {
-
-                Log.d("Jake", "jake is alive: " + passed_dog.ask_alive());
+            for (int sec_count=0; sec_count < 480; sec_count++) {
 
                 // Set up variables for a random modulo and random direction number.
                 // These variables dictate when and in what direction Jake moves.
@@ -51,16 +50,32 @@ public class time_thread implements Runnable {
                 int low_rand_mod = 2;
                 int high_rand_mod = 25;
 
+                int low_rand_scratch = 0;
+                int high_rand_scratch = 5000;
+
                 int low_rand_dir = 0;
                 int high_rand_dir = 5000;
 
                 Random rand_modulo = new Random();
                 Random rand_direction = new Random();
+                Random rand_scratch = new Random();
 
                 r_mod = rand_modulo.nextInt(high_rand_mod-low_rand_mod) + low_rand_mod;
                 r_dir = rand_direction.nextInt(high_rand_dir-low_rand_dir) + low_rand_dir;
+                r_scratch = rand_scratch.nextInt(high_rand_scratch-low_rand_scratch) + low_rand_scratch;
+
+                if (r_scratch <= 1500) {
+
+                    passed_dog.dog_scratches();
+                }
+
+                // This IF decides whether he moves or not.
 
                 if (sec_count % r_mod == 0) {
+
+                    // This IF decides what movement he makes.
+
+                    // This IF decides whether he walks left or right.
 
                     if(r_dir <= 2500) {
 
@@ -69,6 +84,7 @@ public class time_thread implements Runnable {
                     else {
                         passed_dog.walk_dog_right();
                     }
+
                 }
 
                 if (!passed_dog.ask_alive()) {

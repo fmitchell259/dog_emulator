@@ -223,5 +223,15 @@ public class jake implements Parcelable {
 
     }
 
+    public void dog_scratches() {
+
+        act.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                act.dog_scratch();
+            }
+        });
+    }
+
 
 }

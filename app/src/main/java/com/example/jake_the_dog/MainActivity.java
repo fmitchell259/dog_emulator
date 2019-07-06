@@ -32,31 +32,49 @@ public class MainActivity extends AppCompatActivity {
     Button clean_button;
     Button stats_button;
 
+    float dist_track_right = 0;
+    float dist_track_left = 0;
+
     // Animation methods.
 
     public void move_right(ImageView animate_walk) {
 
         float r_dist;
         int low = 1;
-        int high = 1000;
+        int high = 900;
         Random rand_dist = new Random();
-        r_dist = (float) rand_dist.nextInt(high-low) + low;
-
-        final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
-        move_to_right.start();
+        r_dist = (float) rand_dist.nextInt(high - low) + low;
+        if (r_dist < dist_track_right) {
+            walk_left();
+        }
+        else {
+            Log.d("Jake", "Moving Right >>> Random Float is: " + r_dist);
+            Log.d("Jake", "Moving Right >>> dist track right is: " + dist_track_right);
+            final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
+            move_to_right.setDuration(1000);
+            move_to_right.start();
+            dist_track_right = r_dist;
+        }
     }
 
     public void move_left(ImageView animate_walk) {
 
         float r_dist;
         int low = 1;
-        int high = 1000;
+        int high = 900;
         Random rand_dist = new Random();
-        r_dist = (float) (rand_dist.nextInt(high-low) + low)/-1;
-        final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
-        move_to_left.setDuration(1000);
-        move_to_left.start();
-
+        r_dist = (float) (rand_dist.nextInt(high - low) + low) * -1;
+        if (r_dist > dist_track_left) {
+            walk_right();
+        }
+        else {
+            Log.d("Jake", "Moving Left >>> Random Float is: " + r_dist);
+            Log.d("Jake", "Moving Left >>> dist track left is: " + dist_track_left);
+            final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
+            move_to_left.setDuration(1000);
+            move_to_left.start();
+            dist_track_left = r_dist;
+        }
     }
 
     public void walk_right() {
@@ -121,6 +139,26 @@ public class MainActivity extends AppCompatActivity {
         fin.show();
     }
 
+    public void dog_scratch() {
+
+        final ImageView animate_scratch = (ImageView) findViewById(R.id.animation_window);
+        Log.d("Jake", "GOT TO THE FUNCTION.");
+
+        animate_scratch.setImageResource(R.drawable.dog_scratch);
+
+        final AnimationDrawable scratching_dog = (AnimationDrawable) animate_scratch.getDrawable();
+
+        final Handler time_delay = new Handler();
+
+        scratching_dog.start();
+
+        time_delay.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                animate_scratch.setImageResource(R.drawable.start_dog);
+            }
+        }, 1500);
+    }
 
     // Here we need an @ statement because I want my app to go full screen.
     // This means it will not run on an API below 14.
