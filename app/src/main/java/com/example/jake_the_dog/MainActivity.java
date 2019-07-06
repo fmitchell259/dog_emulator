@@ -1,6 +1,4 @@
 package com.example.jake_the_dog;
-
-import androidx.annotation.MainThread;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,15 +32,28 @@ public class MainActivity extends AppCompatActivity {
     Button clean_button;
     Button stats_button;
 
+    // Animation methods.
+
     public void move_right(ImageView animate_walk) {
 
-        final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", 150f);
+        float r_dist;
+        int low = 1;
+        int high = 1000;
+        Random rand_dist = new Random();
+        r_dist = (float) rand_dist.nextInt(high-low) + low;
+
+        final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
         move_to_right.start();
     }
 
     public void move_left(ImageView animate_walk) {
 
-        final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", -150f);
+        float r_dist;
+        int low = 1;
+        int high = 1000;
+        Random rand_dist = new Random();
+        r_dist = (float) (rand_dist.nextInt(high-low) + low)/-1;
+        final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
         move_to_left.setDuration(1000);
         move_to_left.start();
 
