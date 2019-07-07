@@ -7,3 +7,5 @@ Once dead the user is displayed a message and asked to start again.
 
 The user can navigate between two basic activites, and can also feed and water the animal. 
 
+The dog will randomly move left or right at a random time. 
+
