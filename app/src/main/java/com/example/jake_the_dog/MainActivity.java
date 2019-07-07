@@ -1,6 +1,5 @@
 package com.example.jake_the_dog;
-
-import androidx.annotation.MainThread;
+import androidx.annotation.LongDef;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,13 +8,13 @@ import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,18 +34,98 @@ public class MainActivity extends AppCompatActivity {
     Button clean_button;
     Button stats_button;
 
+    boolean play_mode = false;
+
+    float dist_track= 0;
+
+    int consecutive_iterations = 0;
+    Handler user_handle = new Handler();
+
+    // Animation methods.
+
+    public void draw_ball() {
+
+        // All im doing is drawing the ball here.
+
+        final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
+        ball_window.setImageResource(R.drawable.ball);
+        ball_window.setImageAlpha(255);
+    }
+
+    public void undraw_ball() {
+
+        final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
+        ball_window.setImageAlpha(0);
+    }
+
     public void move_right(ImageView animate_walk) {
 
-        final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", 150f);
-        move_to_right.start();
+        float r_dist;
+        int low = 100;
+        int high = 750;
+        final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
+        Random rand_dist = new Random();
+        r_dist = (float) rand_dist.nextInt(high - low) + low;
+        Handler handle = new Handler();
+        Handler inside_if_handle = new Handler();
+        if (r_dist < dist_track) {
+            inside_if_handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    walk_left();
+                }
+            }, 250);
+        }
+        else {
+            Log.d("Jake", "Moving Right >>> Random Float is: " + r_dist);
+            Log.d("Jake", "Moving Right >>> dist track right is: " + dist_track);
+            final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
+            move_to_right.setDuration(1000);
+            move_to_right.start();
+            dist_track = r_dist;
+            handle.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                back_to_start.setImageResource(R.drawable.start_dog);
+
+            }
+        }, 1200);
+        }
     }
 
     public void move_left(ImageView animate_walk) {
 
-        final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", -150f);
-        move_to_left.setDuration(1000);
-        move_to_left.start();
+        float r_dist;
+        int low = 100;
+        int high = 750;
+        final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
+        Random rand_dist = new Random();
+        Handler handle = new Handler();
+        Handler inside_if_handle = new Handler();
+        r_dist = (float) (rand_dist.nextInt(high - low) + low) * -1;
+        if (r_dist > dist_track + 100) {
+            inside_if_handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    walk_right();
+                }
+            }, 250);
+        }
+        else {
+            Log.d("Jake", "Moving Left >>> Random Float is: " + r_dist);
+            Log.d("Jake", "Moving Left >>> dist track left is: " + dist_track);
+            final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
+            move_to_left.setDuration(800);
+            move_to_left.start();
+            dist_track = r_dist;
+            handle.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                back_to_start.setImageResource(R.drawable.start_dog);
 
+            }
+        }, 1200);
+        }
     }
 
     public void walk_right() {
@@ -54,18 +133,12 @@ public class MainActivity extends AppCompatActivity {
         final ImageView animate_walk = (ImageView) findViewById(R.id.animation_window);
         animate_walk.setImageResource(R.drawable.dog_walk_right);
         final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
-        final Handler handle = new Handler();
 
         walking_dog.start();
+        Log.d("Jake", "\nStarted the MOVE RIGHT ANIMATION.\n");
         move_right(animate_walk);
+        Log.d("Jake", "\nStarted MOVING ANIMATION TO THE RIGHT.\n");
 
-        handle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animate_walk.setImageResource(R.drawable.start_dog);
-
-            }
-        }, 1000);
     }
 
     public void walk_left() {
@@ -76,15 +149,10 @@ public class MainActivity extends AppCompatActivity {
         final Handler handle = new Handler();
 
         walking_dog.start();
+        Log.d("Jake", "\nStarted the MOVE LEFT ANIMATION.\n");
         move_left(animate_walk);
+        Log.d("Jake", "\nStarted the MOVING ANIMATION LEFT.\n");
 
-        handle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animate_walk.setImageResource(R.drawable.start_dog);
-
-            }
-        }, 1000);
     }
 
     public void dead_toast() {
@@ -111,6 +179,27 @@ public class MainActivity extends AppCompatActivity {
         fin.show();
     }
 
+    public void dog_scratch() {
+
+        final ImageView animate_scratch = (ImageView) findViewById(R.id.animation_window);
+        Log.d("Jake", "GOT TO THE FUNCTION.");
+
+        animate_scratch.setImageResource(R.drawable.dog_scratch);
+
+        final AnimationDrawable scratching_dog = (AnimationDrawable) animate_scratch.getDrawable();
+
+        final Handler time_delay = new Handler();
+
+        scratching_dog.start();
+
+        time_delay.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                animate_scratch.setImageResource(R.drawable.start_dog);
+                fresh_dog.set_scracthing(false);
+            }
+        }, 1500);
+    }
 
     // Here we need an @ statement because I want my app to go full screen.
     // This means it will not run on an API below 14.
@@ -146,9 +235,13 @@ public class MainActivity extends AppCompatActivity {
         final ImageView start_dog = (ImageView) findViewById(R.id.animation_window);
         start_dog.setImageResource(R.drawable.start_dog);
 
-        final time_thread time = new time_thread(fresh_dog);
+        // Set up initial time thread for non-user interaction.
 
-        MainActivity _mActivity = new MainActivity();
+        final time_thread time = new time_thread(fresh_dog, this);
+
+        // Initialise the user-driven thred when the user presses play.
+
+        final user_interaction_thread user_thread = new user_interaction_thread(fresh_dog, this);
 
         // Set up thread pool to deal with a single task, the time_thread.
         // When it is constructed we give it a task and run!
@@ -171,7 +264,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
             }
         });
 
@@ -281,6 +373,15 @@ public class MainActivity extends AppCompatActivity {
         play_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Could start this thread and keep time running so stats go up and down.
+                // I need to call a method within time_thread to stop the animations.
+                // If USER_SWITCH is true then skip all probabilistic animations and just count time.
+
+                draw_ball();
+
+                time.set_interacting(true);
+
 
 
             }

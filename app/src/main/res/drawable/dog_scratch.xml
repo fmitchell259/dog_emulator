@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable= "@drawable/scratch_anim"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim1"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim2"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim3"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim4"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim5"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim6"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim7"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim8"
+        android:duration= "62" />
+
+    <item android:drawable= "@drawable/scratch_anim9"
+        android:duration= "62" />
+
+
+</animation-list>

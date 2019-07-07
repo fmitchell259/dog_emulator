@@ -2,31 +2,33 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable= "@drawable/dogwalk1"
-    android:duration= "62" />
+    android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk2"
-    android:duration= "62" />
+    android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk3"
-        android:duration= "62" />
+        android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk4"
-        android:duration= "62" />
+        android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk5"
-        android:duration= "62" />
+        android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk6"
-        android:duration= "62" />
+        android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk7"
-        android:duration= "62" />
+        android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk8"
-        android:duration= "62" />
+        android:duration= "100" />
 
     <item android:drawable= "@drawable/dogwalk9"
-        android:duration= "62" />
+        android:duration= "100" />
 
+    <item android:drawable= "@drawable/dogwalk6"
+        android:duration= "100" />
 
 </animation-list>
