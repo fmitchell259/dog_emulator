@@ -1,4 +1,5 @@
 package com.example.jake_the_dog;
+import androidx.annotation.LongDef;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,48 +33,77 @@ public class MainActivity extends AppCompatActivity {
     Button clean_button;
     Button stats_button;
 
-    float dist_track_right = 0;
-    float dist_track_left = 0;
+    float dist_track= 0;
 
     // Animation methods.
 
     public void move_right(ImageView animate_walk) {
 
         float r_dist;
-        int low = 1;
-        int high = 900;
+        int low = 100;
+        int high = 650;
+        final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
         Random rand_dist = new Random();
         r_dist = (float) rand_dist.nextInt(high - low) + low;
-        if (r_dist < dist_track_right) {
-            walk_left();
+        Handler handle = new Handler();
+        Handler inside_if_handle = new Handler();
+        if (r_dist < dist_track) {
+            inside_if_handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    walk_left();
+                }
+            }, 1000);
         }
         else {
             Log.d("Jake", "Moving Right >>> Random Float is: " + r_dist);
-            Log.d("Jake", "Moving Right >>> dist track right is: " + dist_track_right);
+            Log.d("Jake", "Moving Right >>> dist track right is: " + dist_track);
             final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
             move_to_right.setDuration(1000);
             move_to_right.start();
-            dist_track_right = r_dist;
+            dist_track = r_dist;
+            handle.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                back_to_start.setImageResource(R.drawable.start_dog);
+
+            }
+        }, 1500);
         }
     }
 
     public void move_left(ImageView animate_walk) {
 
         float r_dist;
-        int low = 1;
-        int high = 900;
+        int low = 100;
+        int high = 650;
+        final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
         Random rand_dist = new Random();
+        Handler handle = new Handler();
+        Handler inside_if_handle = new Handler();
         r_dist = (float) (rand_dist.nextInt(high - low) + low) * -1;
-        if (r_dist > dist_track_left) {
-            walk_right();
+        if (r_dist > dist_track + 100) {
+            inside_if_handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    walk_right();
+                }
+            }, 1000);
         }
         else {
             Log.d("Jake", "Moving Left >>> Random Float is: " + r_dist);
-            Log.d("Jake", "Moving Left >>> dist track left is: " + dist_track_left);
+            Log.d("Jake", "Moving Left >>> dist track left is: " + dist_track);
             final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
-            move_to_left.setDuration(1000);
+            move_to_left.setDuration(800);
             move_to_left.start();
-            dist_track_left = r_dist;
+            dist_track = r_dist;
+            handle.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                back_to_start.setImageResource(R.drawable.start_dog);
+
+            }
+        }, 1500);
         }
     }
 
@@ -82,18 +112,12 @@ public class MainActivity extends AppCompatActivity {
         final ImageView animate_walk = (ImageView) findViewById(R.id.animation_window);
         animate_walk.setImageResource(R.drawable.dog_walk_right);
         final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
-        final Handler handle = new Handler();
 
         walking_dog.start();
+        Log.d("Jake", "\nStarted the MOVE RIGHT ANIMATION.\n");
         move_right(animate_walk);
+        Log.d("Jake", "\nStarted the MOVE LEFT ANIMATION.\n");
 
-        handle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animate_walk.setImageResource(R.drawable.start_dog);
-
-            }
-        }, 1000);
     }
 
     public void walk_left() {
@@ -104,15 +128,10 @@ public class MainActivity extends AppCompatActivity {
         final Handler handle = new Handler();
 
         walking_dog.start();
+        Log.d("Jake", "\nStarted the MOVE LEFT ANIMATION.\n");
         move_left(animate_walk);
+        Log.d("Jake", "\nStarted the MOVING ANIMATION LEFT.\n");
 
-        handle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animate_walk.setImageResource(R.drawable.start_dog);
-
-            }
-        }, 1000);
     }
 
     public void dead_toast() {
@@ -196,8 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
         final time_thread time = new time_thread(fresh_dog);
 
-        MainActivity _mActivity = new MainActivity();
-
         // Set up thread pool to deal with a single task, the time_thread.
         // When it is constructed we give it a task and run!
 
@@ -219,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
             }
         });
 

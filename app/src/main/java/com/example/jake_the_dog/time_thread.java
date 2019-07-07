@@ -71,7 +71,7 @@ public class time_thread implements Runnable {
 
                 // This IF decides whether he moves or not.
 
-                if (sec_count % r_mod == 0) {
+                if (sec_count % 10 == 0) {
 
                     // This IF decides what movement he makes.
 
