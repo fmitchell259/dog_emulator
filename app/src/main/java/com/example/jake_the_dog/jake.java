@@ -60,6 +60,8 @@ public class jake implements Parcelable {
                 m_clean, m_bored,
                 m_tired;
 
+    private boolean dog_is_scratching = false;
+
     private MainActivity act;
 
     private boolean is_alive;
@@ -81,6 +83,14 @@ public class jake implements Parcelable {
 
     public boolean ask_alive() {
         return this.is_alive;
+    }
+
+    public void set_scracthing(boolean scratching) {
+        dog_is_scratching = scratching;
+    }
+
+    public boolean get_scratching() {
+        return dog_is_scratching;
     }
 
     public int getM_hunger() {

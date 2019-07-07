@@ -18,10 +18,10 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.587"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/test" />
 
     <Button
@@ -106,5 +106,16 @@
         app:layout_constraintStart_toStartOf="@+id/test_background"
         app:srcCompat="@android:color/transparent"
         tools:srcCompat="@drawable/start_dog" />
+
+    <ImageView
+        android:id="@+id/ball_window"
+        android:layout_width="83dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="208dp"
+        android:contentDescription="@string/ball"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,15 +34,35 @@ public class MainActivity extends AppCompatActivity {
     Button clean_button;
     Button stats_button;
 
+    boolean play_mode = false;
+
     float dist_track= 0;
 
+    int consecutive_iterations = 0;
+    Handler user_handle = new Handler();
+
     // Animation methods.
+
+    public void draw_ball() {
+
+        // I want to keep the user inside this function.
+
+        final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
+        ball_window.setImageResource(R.drawable.ball);
+        ball_window.setImageAlpha(255);
+    }
+
+    public void undraw_ball() {
+
+        final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
+        ball_window.setImageAlpha(0);
+    }
 
     public void move_right(ImageView animate_walk) {
 
         float r_dist;
         int low = 100;
-        int high = 650;
+        int high = 750;
         final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
         Random rand_dist = new Random();
         r_dist = (float) rand_dist.nextInt(high - low) + low;
@@ -53,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     walk_left();
                 }
-            }, 1000);
+            }, 250);
         }
         else {
             Log.d("Jake", "Moving Right >>> Random Float is: " + r_dist);
@@ -68,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 back_to_start.setImageResource(R.drawable.start_dog);
 
             }
-        }, 1500);
+        }, 1200);
         }
     }
 
@@ -76,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         float r_dist;
         int low = 100;
-        int high = 650;
+        int high = 750;
         final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
         Random rand_dist = new Random();
         Handler handle = new Handler();
@@ -88,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     walk_right();
                 }
-            }, 1000);
+            }, 250);
         }
         else {
             Log.d("Jake", "Moving Left >>> Random Float is: " + r_dist);
@@ -103,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 back_to_start.setImageResource(R.drawable.start_dog);
 
             }
-        }, 1500);
+        }, 1200);
         }
     }
 
@@ -116,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         walking_dog.start();
         Log.d("Jake", "\nStarted the MOVE RIGHT ANIMATION.\n");
         move_right(animate_walk);
-        Log.d("Jake", "\nStarted the MOVE LEFT ANIMATION.\n");
+        Log.d("Jake", "\nStarted MOVING ANIMATION TO THE RIGHT.\n");
 
     }
 
@@ -175,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 animate_scratch.setImageResource(R.drawable.start_dog);
+                fresh_dog.set_scracthing(false);
             }
         }, 1500);
     }
@@ -213,7 +235,13 @@ public class MainActivity extends AppCompatActivity {
         final ImageView start_dog = (ImageView) findViewById(R.id.animation_window);
         start_dog.setImageResource(R.drawable.start_dog);
 
-        final time_thread time = new time_thread(fresh_dog);
+        // Set up initial time thread for non-user interaction.
+
+        final time_thread time = new time_thread(fresh_dog, this);
+
+        // Initialise the user-driven thred when the user presses play.
+
+        final user_interaction_thread user_thread = new user_interaction_thread(fresh_dog, this);
 
         // Set up thread pool to deal with a single task, the time_thread.
         // When it is constructed we give it a task and run!
@@ -345,6 +373,15 @@ public class MainActivity extends AppCompatActivity {
         play_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Could start this thread and keep time running so stats go up and down.
+                // I need to call a method within time_thread to stop the animations.
+                // If USER_SWITCH is true then skip all probabilistic animations and just count time.
+
+                draw_ball();
+
+                time.set_interacting(true);
+
 
 
             }
