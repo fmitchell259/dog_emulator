@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void draw_ball() {
 
-        // I want to keep the user inside this function.
+        // All im doing is drawing the ball here.
 
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         ball_window.setImageResource(R.drawable.ball);
