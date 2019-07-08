@@ -47,7 +47,6 @@ public class time_thread implements Runnable {
 
     public void run() {
 
-        int r_mod;
         int r_dir;
         int r_scratch;
 
@@ -73,7 +72,6 @@ public class time_thread implements Runnable {
                 Random rand_direction = new Random();
                 Random rand_scratch = new Random();
 
-                r_mod = rand_modulo.nextInt(high_rand_mod-low_rand_mod) + low_rand_mod;
                 r_dir = rand_direction.nextInt(high_rand_dir-low_rand_dir) + low_rand_dir;
                 r_scratch = rand_scratch.nextInt(high_rand_scratch-low_rand_scratch) + low_rand_scratch;
 

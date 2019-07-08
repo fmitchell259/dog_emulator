@@ -1,16 +1,8 @@
 package com.example.jake_the_dog;
 
-// Jake has to have some animation within it.
-
-import android.Manifest;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-import android.widget.ImageView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 
 public class jake implements Parcelable {
@@ -24,6 +16,8 @@ public class jake implements Parcelable {
         m_tired = in.readInt();
         is_alive = in.readByte() != 0;
     }
+
+    // We need to "parcel" the dog class in order to move it between Activities and save stats.
 
     public static final Creator<jake> CREATOR = new Creator<jake>() {
         @Override
@@ -54,7 +48,7 @@ public class jake implements Parcelable {
 
     // End of Parcelable methods needed in order to implement Parcelable.
 
-    // Beginning of declarations of member variables and methods for onCreate.
+    // Beginning of declarations of member variables and methods for jake class.
 
     private int m_hunger, m_thirst,
                 m_clean, m_bored,
@@ -67,6 +61,8 @@ public class jake implements Parcelable {
     private boolean is_alive;
 
     // Basic constructor for jake, he starts with 100.
+
+    // Main activity is passed a parameter in order to call the animation methods stored there.
 
     jake(MainActivity parent_active) {
         m_hunger = 100;
