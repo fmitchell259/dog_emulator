@@ -1,14 +1,11 @@
 package com.example.jake_the_dog;
-import androidx.annotation.LongDef;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     boolean play_mode = false;
 
     float dist_track= 0;
-
-    int consecutive_iterations = 0;
-    Handler user_handle = new Handler();
 
     // Animation methods.
 
@@ -301,7 +294,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Jake", "Well Done! You fed Jake.");
                     fresh_dog.setM_hunger(3);
 
-                    // TODO: Animation fucntion to be programmed below.
+                    // TODO: Animation function to be programmed below.
+                    // TODO: Time_thread must get "dog_is_eating" flag to skip arbitrary animations.
+
                     fresh_dog.jake_eats();
 
                     Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You fed Jake :)",
@@ -347,7 +342,10 @@ public class MainActivity extends AppCompatActivity {
 
                     fresh_dog.setM_thirst(2);
 
-                    //TODO: Animation fucntion below needs programmed.
+                    // TODO: Animation function below needs programmed.
+                    // TODO: Time thread must be passed a "dog_is_drinking" flag to pass arbitrary
+                    // TODO: animations.
+
                     fresh_dog.jake_drinks();
 
                     Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You WATERED Jake :)",
@@ -374,12 +372,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Could start this thread and keep time running so stats go up and down.
                 // I need to call a method within time_thread to stop the animations.
                 // If USER_SWITCH is true then skip all probabilistic animations and just count time.
 
                 draw_ball();
-
                 time.set_interacting(true);
 
 

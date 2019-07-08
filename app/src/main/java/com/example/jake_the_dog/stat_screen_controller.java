@@ -40,7 +40,7 @@ public class stat_screen_controller extends AppCompatActivity {
         jake fresh_dog = getIntent().getExtras().getParcelable("fresh_dog");
 
 
-        // Next retrieve all of the dogds stats with an @Nullable decorator to ensure
+        // Next retrieve all of the dogs stats with an @Nullable decorator to ensure
         // nullPointerException is covered.
 
         @Nullable
