@@ -36,6 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
     // Animation methods.
 
+    public void move_cloud_one() {
+
+        Log.d("Jake", "[+] >>> WE REACHED THE MOVE CLOUD FUNCTION. BUT IT ISNT MOVING!");
+
+        final ImageView cloud_one_move = (ImageView) findViewById(R.id.cloud_one);
+        final ObjectAnimator moving_cloud = ObjectAnimator.ofFloat(cloud_one_move, "translationX", 800f);
+        moving_cloud.setDuration(2000);
+        moving_cloud.start();
+
+    }
+
     public void draw_ball() {
 
         // All im doing is drawing the ball here.

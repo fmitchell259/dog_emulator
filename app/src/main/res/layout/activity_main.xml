@@ -12,17 +12,16 @@
         android:id="@+id/test_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:adjustViewBounds="false"
         android:contentDescription="@string/background_test"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/test" />
+        app:srcCompat="@drawable/the_garden" />
 
     <Button
         android:id="@+id/water_button"
@@ -31,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="172dp"
         android:layout_marginLeft="172dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/water_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -43,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="172dp"
         android:layout_marginRight="172dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/clean_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -53,9 +52,9 @@
         style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/feed_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -67,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/play_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -117,5 +116,29 @@
         android:contentDescription="@string/ball"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cloud_one"
+        android:layout_width="186dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/cloud_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cloud_one" />
+
+    <ImageView
+        android:id="@+id/cloud_two"
+        android:layout_width="173dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginRight="260dp"
+        android:contentDescription="@string/cloud_two"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cloud_two" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

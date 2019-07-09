@@ -76,6 +76,7 @@ public class time_thread implements Runnable {
                 r_scratch = rand_scratch.nextInt(high_rand_scratch-low_rand_scratch) + low_rand_scratch;
 
                 if (!interacting) {
+
                     if (r_scratch <= 1500) {
 
                         passed_dog.dog_scratches();
