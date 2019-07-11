@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.ObjectStreamException;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,13 +40,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void move_cloud_one() {
 
-        Log.d("Jake", "[+] >>> WE REACHED THE MOVE CLOUD FUNCTION. BUT IT ISNT MOVING!");
-
         final ImageView cloud_one_move = (ImageView) findViewById(R.id.cloud_one);
-        final ObjectAnimator moving_cloud = ObjectAnimator.ofFloat(cloud_one_move, "translationX", 800f);
-        moving_cloud.setDuration(2000);
+        float end = cloud_one_move.getTranslationX() + 10;
+        if (end > 1800) {
+            cloud_one_move.setX(-1500);
+        }
+        final ObjectAnimator moving_cloud = ObjectAnimator.ofFloat(cloud_one_move, "translationX", end);
+        moving_cloud.setDuration(250);
         moving_cloud.start();
 
+    }
+
+    public void move_cloud_two() {
+
+        final ImageView cloud_two_move = (ImageView) findViewById(R.id.cloud_two);
+        float end = cloud_two_move.getTranslationX() - 10;
+        if (end < -1800) {
+            cloud_two_move.setX(1500);
+        }
+        final ObjectAnimator moving_cloud = ObjectAnimator.ofFloat(cloud_two_move, "translationX", end);
+        moving_cloud.setDuration(250);
+        moving_cloud.start();
     }
 
     public void draw_ball() {
