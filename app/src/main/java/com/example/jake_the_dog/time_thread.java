@@ -21,6 +21,9 @@ public class time_thread implements Runnable {
     private boolean interacting = false;
     private MainActivity act;
     private int cont_inter = 0;
+    private int seconds = 0;
+    private int minutes = 0;
+    private int hours = 0;
 
     // Constructor which takes a passed dog reference as a parameter.
 
@@ -54,58 +57,39 @@ public class time_thread implements Runnable {
 
         try {
 
-            for (int sec_count=0; sec_count < 480; sec_count++) {
+            for (int mil_sec_count=0; mil_sec_count < 250000; mil_sec_count++) {
 
                 // Set up variables for a random modulo and random direction number.
                 // These variables dictate when and in what direction Jake moves.
 
-                int low_rand_mod = 2;
-                int high_rand_mod = 25;
+                // This FOR loop runs for 100 ms so I want to move the clouds every time it
+                // rolls around.
+
+                act.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        act.move_cloud_one();
+                        act.move_cloud_two();
+                    }
+                });
 
                 int low_rand_scratch = 0;
                 int high_rand_scratch = 5000;
-
-                int low_rand_dir = 0;
-                int high_rand_dir = 5000;
-
-                Random rand_modulo = new Random();
-                Random rand_direction = new Random();
                 Random rand_scratch = new Random();
 
-                r_dir = rand_direction.nextInt(high_rand_dir-low_rand_dir) + low_rand_dir;
                 r_scratch = rand_scratch.nextInt(high_rand_scratch-low_rand_scratch) + low_rand_scratch;
 
                 if (!interacting) {
-                    if (r_scratch <= 1500) {
 
-                        passed_dog.dog_scratches();
+                    if(mil_sec_count % 10 == 0) {
 
+                        seconds += 1;
+                        Log.d("Jake", seconds +
+                                " seconds have went by.");
                     }
 
-                    // This IF decides whether he moves or not.
 
-                    if (sec_count % 10 == 0) {
-
-                        // This IF decides what movement he makes.
-
-                        // This IF decides whether he walks left or right.
-
-                        if(r_dir <= 2500) {
-
-                            passed_dog.walk_dog_left();
-                        }
-                        else {
-                            passed_dog.walk_dog_right();
-                        }
-
-                    }
-
-                    if (!passed_dog.ask_alive()) {
-                        passed_dog.jake_dead();
-                        break;
-                    }
-
-                    if (sec_count % 2 == 0) {
+                    if (mil_sec_count % 20 == 0) {
 
                         passed_dog.setM_hunger(-0.5);
                         passed_dog.setM_thirst(-0.5);
@@ -115,9 +99,40 @@ public class time_thread implements Runnable {
 
                     }
 
-                    Thread.sleep(1000);
-                    Log.d("Jake", sec_count +
-                            " seconds have went by.");
+                    if (r_scratch <= 200) {
+
+                        passed_dog.dog_scratches();
+
+                    }
+
+                    // This IF decides whether he moves or not.
+
+                    if (seconds % 10 == 0) {
+
+                        passed_dog.walk_dog_left();
+
+                    }
+
+                        // This IF decides what movement he makes.
+
+                        // This IF decides whether he walks left or right.
+
+//                        if(r_dir <= 2500) {
+//
+//                            passed_dog.walk_dog_left();
+//                        }
+//                        else {
+//                            passed_dog.walk_dog_right();
+//                        }
+//
+//                    }
+
+                    if (!passed_dog.ask_alive()) {
+                        passed_dog.jake_dead();
+                        break;
+                    }
+
+                    Thread.sleep(100);
 
                 }
 
@@ -125,6 +140,24 @@ public class time_thread implements Runnable {
                 // and continue to count the time down and adjust the stats.
 
                 else {
+
+                    if(mil_sec_count % 10 == 0) {
+
+                        seconds += 1;
+                        cont_inter += 1;
+                        Log.d("Jake", seconds +
+                                " seconds have went by while USER INTERACTING...");
+                    }
+
+                    if (mil_sec_count % 20 == 0) {
+
+                        passed_dog.setM_hunger(-0.5);
+                        passed_dog.setM_thirst(-0.5);
+                        passed_dog.setM_clean(-0.5);
+                        passed_dog.setM_bored(-0.5);
+
+
+                    }
 
                     if(cont_inter == 15) {
 
@@ -139,20 +172,7 @@ public class time_thread implements Runnable {
                         break;
                     }
 
-                    if (sec_count % 2 == 0) {
-
-                        passed_dog.setM_hunger(-0.5);
-                        passed_dog.setM_thirst(-0.5);
-                        passed_dog.setM_clean(-0.5);
-                        passed_dog.setM_bored(-0.5);
-
-
-                    }
-
-                    Thread.sleep(1000);
-                    cont_inter += 1;
-                    Log.d("Jake", sec_count +
-                            " seconds have went by while USER INTERACTING...");
+                    Thread.sleep(100);
 
                 }
             }

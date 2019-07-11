@@ -14,4 +14,6 @@
     <string name="stats_bored">Bored Stats are sitting at: </string>
     <string name="background_test">A tester background</string>
     <string name="ball">Ball Window</string>
+    <string name="cloud_one">Cloud One</string>
+    <string name="cloud_two">Cloud Two</string>
 </resources>

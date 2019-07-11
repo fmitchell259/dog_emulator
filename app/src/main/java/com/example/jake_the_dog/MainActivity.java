@@ -36,6 +36,34 @@ public class MainActivity extends AppCompatActivity {
 
     // Animation methods.
 
+    public void move_cloud_one () {
+
+        final ImageView cloud_one_move = (ImageView) findViewById(R.id.cloud_one);
+        final float end = cloud_one_move.getTranslationX() + 10;
+        final ObjectAnimator move_cloud = ObjectAnimator.ofFloat(cloud_one_move, "translationX", end);
+        if (end > 1700) {
+            cloud_one_move.setX(-1500);
+        }
+        else {
+            move_cloud.setDuration(250);
+            move_cloud.start();
+        }
+    }
+
+    public void move_cloud_two() {
+
+        final ImageView cloud_two_move = (ImageView) findViewById(R.id.cloud_two);
+        final float end = cloud_two_move.getTranslationX() - 10;
+        final ObjectAnimator move_cloud = ObjectAnimator.ofFloat(cloud_two_move, "translationX", end);
+        if (end < -1700) {
+            cloud_two_move.setX(1500);
+        }
+        else {
+            move_cloud.setDuration(250);
+            move_cloud.start();
+        }
+    }
+
     public void draw_ball() {
 
         // All im doing is drawing the ball here.
