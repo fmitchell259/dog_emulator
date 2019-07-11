@@ -15,8 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import java.io.ObjectStreamException;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,29 +36,32 @@ public class MainActivity extends AppCompatActivity {
 
     // Animation methods.
 
-    public void move_cloud_one() {
+    public void move_cloud_one () {
 
         final ImageView cloud_one_move = (ImageView) findViewById(R.id.cloud_one);
-        float end = cloud_one_move.getTranslationX() + 10;
-        if (end > 1800) {
+        final float end = cloud_one_move.getTranslationX() + 10;
+        final ObjectAnimator move_cloud = ObjectAnimator.ofFloat(cloud_one_move, "translationX", end);
+        if (end > 1700) {
             cloud_one_move.setX(-1500);
         }
-        final ObjectAnimator moving_cloud = ObjectAnimator.ofFloat(cloud_one_move, "translationX", end);
-        moving_cloud.setDuration(250);
-        moving_cloud.start();
-
+        else {
+            move_cloud.setDuration(250);
+            move_cloud.start();
+        }
     }
 
     public void move_cloud_two() {
 
         final ImageView cloud_two_move = (ImageView) findViewById(R.id.cloud_two);
-        float end = cloud_two_move.getTranslationX() - 10;
-        if (end < -1800) {
+        final float end = cloud_two_move.getTranslationX() - 10;
+        final ObjectAnimator move_cloud = ObjectAnimator.ofFloat(cloud_two_move, "translationX", end);
+        if (end < -1700) {
             cloud_two_move.setX(1500);
         }
-        final ObjectAnimator moving_cloud = ObjectAnimator.ofFloat(cloud_two_move, "translationX", end);
-        moving_cloud.setDuration(250);
-        moving_cloud.start();
+        else {
+            move_cloud.setDuration(250);
+            move_cloud.start();
+        }
     }
 
     public void draw_ball() {
