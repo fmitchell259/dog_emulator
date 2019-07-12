@@ -170,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
         final Handler handle = new Handler();
 
         walking_dog.start();
-        Log.d("Jake", "\nStarted the MOVE LEFT ANIMATION.\n");
-        move_left(animate_walk);
-        Log.d("Jake", "\nStarted the MOVING ANIMATION LEFT.\n");
+//        Log.d("Jake", "\nStarted the MOVE LEFT ANIMATION.\n");
+//        move_left(animate_walk);
+//        Log.d("Jake", "\nStarted the MOVING ANIMATION LEFT.\n");
 
     }
 
