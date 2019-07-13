@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     float dist_track = 0;
     float ball_track = 0;
 
+    float ball_pos;
+
     float parameter_x;
     float y_co;
 
@@ -91,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         ball_window.setImageResource(R.drawable.ball);
+        ball_window.setX(211f);
+        ball_window.setY(411f);
         Log.d("JakePlay", " Initial Ball X >> " + ball_window.getX());
         Log.d("JakePlay", " Initial Ball Y >> " + ball_window.getY());
         ball_window.setImageAlpha(255);
@@ -130,27 +134,45 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Jake", "Reached the function!");
 
-        Handler ball_handle = new Handler();
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         animate_ball(ball_window, false);
 
-        for(int i=0; i < 1589; i ++) {
-            x_cor = i + 211;
-            y_cor = get_throw_y(x_cor);
-            ball_handle.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+        // ValueAnimator Attempt.
 
+        final ValueAnimator ball_curve = ValueAnimator.ofFloat(0, 1);
+        ball_curve.setDuration(2000);
+        ball_curve.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ball_pos = ball_window.getTranslationX();
+                float value = ((float) (ball_curve.getAnimatedValue()));
+                ball_window.setTranslationX((float) (800.0 * Math.sin(value*Math.PI)));
+                ball_window.setTranslationY((float) (30.0 * Math.cos(value*Math.PI)));
+                if (ball_pos < 211) {
+                    drop_ball(ball_window);
                 }
-            }, 2000);
-            x = (float) x_cor;
-            y = (float) y_cor;
-            ball_window.setX(1800);
-            ball_window.setY(735);
-            Log.d("JakePlay", "[+] X CO-ORDINATE IS: " + x);
-            Log.d("JakePlay", "[+] Y CO-ORDINATE IS: " + y);
+            }
 
-        }
+        });
+        ball_curve.start();
+
+
+
+//        for(int i=0; i < 1589; i ++) {
+//            x_cor = i + 211;
+//            y_cor = get_throw_y(x_cor);
+//            x = (float) x_cor;
+//            y = (float) y_cor;
+//            ball_window.setX(1800);
+//            ball_window.setY(735);
+//            ball_handle.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Log.d("JakePlay", "[+] X CO-ORDINATE IS: " + x);
+//                    Log.d("JakePlay", "[+] Y CO-ORDINATE IS: " + y);
+//                }
+//            }, 1000);
+//        }
     }
 
     public void drop_ball(final ImageView animating_ball) {
