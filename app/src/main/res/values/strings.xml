@@ -16,4 +16,6 @@
     <string name="ball">Ball Window</string>
     <string name="cloud_one">Cloud One</string>
     <string name="cloud_two">Cloud Two</string>
+    <string name="ball_button">Ball Button</string>
+    <string name="throw_ball">THROW!</string>
 </resources>
