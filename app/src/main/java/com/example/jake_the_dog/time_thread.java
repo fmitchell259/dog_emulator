@@ -51,7 +51,6 @@ public class time_thread implements Runnable {
     public void run() {
 
         int r_dir;
-        int r_scratch;
 
         Log.d("Jake", "Starting Time Thread....");
 
@@ -75,9 +74,9 @@ public class time_thread implements Runnable {
 
                 int low_rand_scratch = 0;
                 int high_rand_scratch = 5000;
-                Random rand_scratch = new Random();
+                Random rand_dir = new Random();
 
-                r_scratch = rand_scratch.nextInt(high_rand_scratch-low_rand_scratch) + low_rand_scratch;
+                r_dir = rand_dir.nextInt(high_rand_scratch-low_rand_scratch) + low_rand_scratch;
 
                 if (!interacting) {
 
@@ -99,33 +98,31 @@ public class time_thread implements Runnable {
 
                     }
 
-                    if (r_scratch <= 200) {
+                    // Milliseconds 150ms = 15s
+
+                    if (mil_sec_count % 150 == 0 ) {
 
                         passed_dog.dog_scratches();
 
                     }
 
                     // This IF decides whether he moves or not.
+                    // Measuring in milliseconds, so every 100 ms = 10s.
 
-                    if (seconds % 10 == 0) {
+                    if (mil_sec_count % 100 == 0) {
 
-                        passed_dog.walk_dog_left();
+                        // 50 / 50 whether he will walk left or right.
+                        // He walks every ten seconds.
+
+                        if (r_dir <= 2500) {
+
+                            passed_dog.walk_dog_left();
+                        }
+                        else {
+                            passed_dog.walk_dog_right();
+                        }
 
                     }
-
-                        // This IF decides what movement he makes.
-
-                        // This IF decides whether he walks left or right.
-
-//                        if(r_dir <= 2500) {
-//
-//                            passed_dog.walk_dog_left();
-//                        }
-//                        else {
-//                            passed_dog.walk_dog_right();
-//                        }
-//
-//                    }
 
                     if (!passed_dog.ask_alive()) {
                         passed_dog.jake_dead();
