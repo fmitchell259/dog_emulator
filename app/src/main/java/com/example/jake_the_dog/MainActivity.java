@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     boolean play_mode = false;
 
-    float dist_track= 0;
+    float dist_track = 0;
 
     // Animation methods.
 
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         final ImageView cloud_one_move = (ImageView) findViewById(R.id.cloud_one);
         final float end = cloud_one_move.getTranslationX() + 10;
         final ObjectAnimator move_cloud = ObjectAnimator.ofFloat(cloud_one_move, "translationX", end);
-        if (end > 1700) {
-            cloud_one_move.setX(-1500);
+        if (end > 2050) {
+            cloud_one_move.setX(-500);
         }
         else {
             move_cloud.setDuration(250);
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         final ImageView cloud_two_move = (ImageView) findViewById(R.id.cloud_two);
         final float end = cloud_two_move.getTranslationX() - 10;
         final ObjectAnimator move_cloud = ObjectAnimator.ofFloat(cloud_two_move, "translationX", end);
-        if (end < -1700) {
-            cloud_two_move.setX(1500);
+        if (end < - 1200) {
+            cloud_two_move.setX(2100);
         }
         else {
             move_cloud.setDuration(250);
@@ -81,72 +81,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void move_right(ImageView animate_walk) {
 
-        float r_dist;
-        int low = 100;
-        int high = 750;
-        final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
-        Random rand_dist = new Random();
-        r_dist = (float) rand_dist.nextInt(high - low) + low;
-        Handler handle = new Handler();
-        Handler inside_if_handle = new Handler();
-        if (r_dist < dist_track) {
-            inside_if_handle.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    walk_left();
-                }
-            }, 250);
-        }
-        else {
-            Log.d("Jake", "Moving Right >>> Random Float is: " + r_dist);
-            Log.d("Jake", "Moving Right >>> dist track right is: " + dist_track);
-            final ObjectAnimator move_to_right = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
-            move_to_right.setDuration(1000);
-            move_to_right.start();
-            dist_track = r_dist;
-            handle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                back_to_start.setImageResource(R.drawable.start_dog);
-
-            }
-        }, 1200);
-        }
+        final float end = animate_walk.getTranslationX() + 150;
+        dist_track = end;
+        ObjectAnimator move_dog = ObjectAnimator.ofFloat(animate_walk, "translationX", end);
+        move_dog.setDuration(2000);
+        move_dog.start();
     }
 
     public void move_left(ImageView animate_walk) {
 
-        float r_dist;
-        int low = 100;
-        int high = 750;
-        final ImageView back_to_start = (ImageView) findViewById(R.id.animation_window);
-        Random rand_dist = new Random();
-        Handler handle = new Handler();
-        Handler inside_if_handle = new Handler();
-        r_dist = (float) (rand_dist.nextInt(high - low) + low) * -1;
-        if (r_dist > dist_track + 100) {
-            inside_if_handle.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    walk_right();
-                }
-            }, 250);
-        }
-        else {
-            Log.d("Jake", "Moving Left >>> Random Float is: " + r_dist);
-            Log.d("Jake", "Moving Left >>> dist track left is: " + dist_track);
-            final ObjectAnimator move_to_left = ObjectAnimator.ofFloat(animate_walk, "translationX", r_dist);
-            move_to_left.setDuration(800);
-            move_to_left.start();
-            dist_track = r_dist;
-            handle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                back_to_start.setImageResource(R.drawable.start_dog);
+        final float end = animate_walk.getTranslationX() - 150;
+        dist_track = end;
+//        if (dist_track < -600) {
+//            walk_right();
+//        }
+        ObjectAnimator move_dog = ObjectAnimator.ofFloat(animate_walk, "translationX", end);
+        move_dog.setDuration(2000);
+        move_dog.start();
 
-            }
-        }, 1200);
-        }
     }
 
     public void walk_right() {
@@ -154,12 +106,21 @@ public class MainActivity extends AppCompatActivity {
         final ImageView animate_walk = (ImageView) findViewById(R.id.animation_window);
         animate_walk.setImageResource(R.drawable.dog_walk_right);
         final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
-
-        walking_dog.start();
-        Log.d("Jake", "\nStarted the MOVE RIGHT ANIMATION.\n");
-        move_right(animate_walk);
-        Log.d("Jake", "\nStarted MOVING ANIMATION TO THE RIGHT.\n");
-
+        final Handler handle = new Handler();
+        if (dist_track > 600) {
+            walk_left();
+        }
+        else {
+            walking_dog.start();
+            handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    animate_walk.setImageResource(R.drawable.start_dog);
+                    Log.d("Jake", "[+] Moving right >>> distance track is: " + dist_track);
+                }
+            }, 2000);
+            move_right(animate_walk);
+        }
     }
 
     public void walk_left() {
@@ -168,12 +129,20 @@ public class MainActivity extends AppCompatActivity {
         animate_walk.setImageResource(R.drawable.dog_walk);
         final AnimationDrawable walking_dog = (AnimationDrawable) animate_walk.getDrawable();
         final Handler handle = new Handler();
-
-        walking_dog.start();
-//        Log.d("Jake", "\nStarted the MOVE LEFT ANIMATION.\n");
-//        move_left(animate_walk);
-//        Log.d("Jake", "\nStarted the MOVING ANIMATION LEFT.\n");
-
+        if (dist_track < -600) {
+            walk_right();
+        }
+        else {
+            walking_dog.start();
+            handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    animate_walk.setImageResource(R.drawable.start_dog);
+                    Log.d("Jake", "[+] Moving left <<< distance track is: " + dist_track);
+                }
+            }, 2000);
+            move_left(animate_walk);
+        }
     }
 
     public void dead_toast() {
@@ -204,22 +173,10 @@ public class MainActivity extends AppCompatActivity {
 
         final ImageView animate_scratch = (ImageView) findViewById(R.id.animation_window);
         Log.d("Jake", "GOT TO THE FUNCTION.");
-
         animate_scratch.setImageResource(R.drawable.dog_scratch);
-
         final AnimationDrawable scratching_dog = (AnimationDrawable) animate_scratch.getDrawable();
-
-        final Handler time_delay = new Handler();
-
         scratching_dog.start();
 
-        time_delay.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animate_scratch.setImageResource(R.drawable.start_dog);
-                fresh_dog.set_scracthing(false);
-            }
-        }, 1500);
     }
 
     // Here we need an @ statement because I want my app to go full screen.
@@ -301,8 +258,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                start_dog.setImageResource(R.drawable.start_dog);
-
                 Log.d("Jake", "FEED BUTTON PRESSED!");
                 Log.d("Jake", "Jakes hunger is " + fresh_dog.getM_hunger());
 
@@ -351,8 +306,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Jake", "You pressed the WATER button.");
                 Log.d("Jake", "The dogs thirst is: " + fresh_dog.getM_thirst());
 
-                start_dog.setImageResource(R.drawable.start_dog);
-
                 int thirst_thresh = fresh_dog.getM_thirst();
 
                 if (thirst_thresh >= 250) {
@@ -388,11 +341,7 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     }, 2700);
-
-
-
                 }
-
             }
         });
 

@@ -79,6 +79,7 @@
         android:layout_marginRight="24dp"
         android:background="@android:color/transparent"
         android:text="@string/stats_button"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
