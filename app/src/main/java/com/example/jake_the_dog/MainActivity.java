@@ -2,16 +2,26 @@ package com.example.jake_the_dog;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.FlingAnimation;
+
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PathMeasure;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.media.MediaPlayer;
+import android.opengl.EGLObjectHandle;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Transition;
+import android.transition.TransitionValues;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,10 +39,23 @@ public class MainActivity extends AppCompatActivity {
     Button play_button;
     Button clean_button;
     Button stats_button;
-
-    boolean play_mode = false;
+    Button ball_button;
 
     float dist_track = 0;
+    float ball_track = 0;
+
+    float parameter_x;
+    float y_co;
+
+    double x_cor;
+    double y_cor;
+
+    float x;
+    float y;
+
+
+    boolean play_mode = false;
+    Handler ball_wait = new Handler();
 
     // Animation methods.
 
@@ -55,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageView cloud_two_move = (ImageView) findViewById(R.id.cloud_two);
         final float end = cloud_two_move.getTranslationX() - 10;
         final ObjectAnimator move_cloud = ObjectAnimator.ofFloat(cloud_two_move, "translationX", end);
-        if (end < - 1200) {
+        if (end < - 1500) {
             cloud_two_move.setX(2100);
         }
         else {
@@ -64,19 +87,109 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void draw_ball() {
-
-        // All im doing is drawing the ball here.
+    public ImageView draw_ball() {
 
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         ball_window.setImageResource(R.drawable.ball);
+        Log.d("JakePlay", " Initial Ball X >> " + ball_window.getX());
+        Log.d("JakePlay", " Initial Ball Y >> " + ball_window.getY());
         ball_window.setImageAlpha(255);
+        return ball_window;
+    }
+
+    public void animate_ball(ImageView ball_window, boolean initial) {
+
+        ball_window.setImageResource(R.drawable.ball_roll);
+        final AnimationDrawable animate_ball = (AnimationDrawable) ball_window.getDrawable();
+        if (initial) {
+            animate_ball.start();
+            drop_ball(ball_window);
+        }
+        else {
+            animate_ball.start();
+        }
+
+
+    }
+
+    public double get_throw_y(double x) {
+
+        double x_sqaure;
+        double x_multiply;
+        double end = 157290;
+        double y;
+
+        x_sqaure = Math.sqrt(x);
+        x_multiply = x * 960;
+        y = x_sqaure - x_multiply + end;
+        return  y;
+
+    }
+
+    public void throw_ball() {
+
+        Log.d("Jake", "Reached the function!");
+
+        Handler ball_handle = new Handler();
+        final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
+        animate_ball(ball_window, false);
+
+        for(int i=0; i < 1589; i ++) {
+            x_cor = i + 211;
+            y_cor = get_throw_y(x_cor);
+            ball_handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }, 2000);
+            x = (float) x_cor;
+            y = (float) y_cor;
+            ball_window.setX(1800);
+            ball_window.setY(735);
+            Log.d("JakePlay", "[+] X CO-ORDINATE IS: " + x);
+            Log.d("JakePlay", "[+] Y CO-ORDINATE IS: " + y);
+
+        }
+    }
+
+    public void drop_ball(final ImageView animating_ball) {
+
+        final float end = animating_ball.getTranslationY() + 250;
+        final Handler ball_delay = new Handler();
+        ball_track = end;
+        ObjectAnimator drop_ball = ObjectAnimator.ofFloat(animating_ball, "translationY", end);
+        drop_ball.setDuration(500);
+        drop_ball.start();
+        ball_delay.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                animating_ball.setImageResource(R.drawable.ball);
+                play_mode = true;
+            }
+        }, 500);
+
     }
 
     public void undraw_ball() {
 
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         ball_window.setImageAlpha(0);
+        play_mode = false;
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ball_wait.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ball_window.setX(211);
+                        ball_window.setY(499);
+
+
+                    }
+                }, 100);
+            }
+        });
     }
 
     public void move_right(ImageView animate_walk) {
@@ -92,9 +205,6 @@ public class MainActivity extends AppCompatActivity {
 
         final float end = animate_walk.getTranslationX() - 150;
         dist_track = end;
-//        if (dist_track < -600) {
-//            walk_right();
-//        }
         ObjectAnimator move_dog = ObjectAnimator.ofFloat(animate_walk, "translationX", end);
         move_dog.setDuration(2000);
         move_dog.start();
@@ -209,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
         play_button = findViewById(R.id.play_button);
         clean_button = findViewById(R.id.clean_button);
         stats_button = findViewById(R.id.stats_button);
+        ball_button = findViewById(R.id.ball_button);
 
         final ImageView start_dog = (ImageView) findViewById(R.id.animation_window);
         start_dog.setImageResource(R.drawable.start_dog);
@@ -274,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
                     dead_toast();
 
                 } else {
-                    Log.d("Jake", "Well Done! You fed Jake.");
+                    Log.d("Jake", "Well Done! You fed the dog :)");
                     fresh_dog.setM_hunger(3);
 
                     // TODO: Animation function to be programmed below.
@@ -282,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
 
                     fresh_dog.jake_eats();
 
-                    Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You fed Jake :)",
+                    Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You fed the dog :)",
                             Toast.LENGTH_SHORT);
 
                     t2.show();
@@ -319,17 +430,13 @@ public class MainActivity extends AppCompatActivity {
 
                 }else {
 
-                    Log.d("Jake", "Well done you WATERED the dog.");
+                    Log.d("Jake", "Well done you watered the dog :)");
 
                     fresh_dog.setM_thirst(2);
 
-                    // TODO: Animation function below needs programmed.
-                    // TODO: Time thread must be passed a "dog_is_drinking" flag to pass arbitrary
-                    // TODO: animations.
-
                     fresh_dog.jake_drinks();
 
-                    Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You WATERED Jake :)",
+                    Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You watered the dog :)",
                             Toast.LENGTH_SHORT);
 
                     t2.show();
@@ -352,7 +459,8 @@ public class MainActivity extends AppCompatActivity {
                 // I need to call a method within time_thread to stop the animations.
                 // If USER_SWITCH is true then skip all probabilistic animations and just count time.
 
-                draw_ball();
+                ImageView ball_window = draw_ball();
+                animate_ball(ball_window, true);
                 time.set_interacting(true);
 
 
@@ -368,6 +476,19 @@ public class MainActivity extends AppCompatActivity {
                 stat_intent.putExtra("fresh_dog", fresh_dog);
                 startActivity(stat_intent);
 
+            }
+        });
+
+        ball_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(play_mode) {
+
+                    Log.d("JakePlay", "We are now triggering button in Play Mode");
+                    throw_ball();
+
+                }
             }
         });
     }
