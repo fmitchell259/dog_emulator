@@ -109,7 +109,7 @@ public class time_thread implements Runnable {
                     // This IF decides whether he moves or not.
                     // Measuring in milliseconds, so every 100 ms = 10s.
 
-                    if (mil_sec_count % 100 == 0) {
+                    if (mil_sec_count % 900 == 0) {
 
                         // 50 / 50 whether he will walk left or right.
                         // He walks every ten seconds.
