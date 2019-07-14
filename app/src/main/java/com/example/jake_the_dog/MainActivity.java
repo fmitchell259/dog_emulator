@@ -4,12 +4,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.FlingAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.RectF;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Image;
 import android.media.MediaPlayer;
@@ -17,10 +20,12 @@ import android.opengl.EGLObjectHandle;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.ArcMotion;
 import android.transition.Transition;
 import android.transition.TransitionValues;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.PathInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         ball_window.setImageResource(R.drawable.ball);
         ball_window.setX(211f);
-        ball_window.setY(411f);
+        ball_window.setY(499f);
         Log.d("JakePlay", " Initial Ball X >> " + ball_window.getX());
         Log.d("JakePlay", " Initial Ball Y >> " + ball_window.getY());
         ball_window.setImageAlpha(255);
@@ -132,47 +137,46 @@ public class MainActivity extends AppCompatActivity {
 
     public void throw_ball() {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
+
+            Path ball_path = new Path();
+            RectF ball_arc = new RectF(130f, 130f, 650f, 650f);
+            ball_path.arcTo(ball_arc, 30, 270, true);
+            PathInterpolator ball_path_inter = new PathInterpolator(ball_path);
+            animate_ball(ball_window, false);
+            ObjectAnimator throw_ball = ObjectAnimator.ofFloat(ball_window, "translationX",  0f, 500f).setDuration(2000);
+            throw_ball.setInterpolator(ball_path_inter);
+            throw_ball.start();
+        }
+
+        else {
+
+            roll_ball();
+        }
+    }
+
+    public void roll_ball() {
+
         Log.d("Jake", "Reached the function!");
 
+        final Handler ball_handle = new Handler();
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         animate_ball(ball_window, false);
 
         // ValueAnimator Attempt.
 
-        final ValueAnimator ball_curve = ValueAnimator.ofFloat(0, 1);
-        ball_curve.setDuration(2000);
-        ball_curve.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        ball_window.animate().x(1800f).y(700f).setDuration(1000)
+                .start();
+        ball_handle.postDelayed(new Runnable() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ball_pos = ball_window.getTranslationX();
-                float value = ((float) (ball_curve.getAnimatedValue()));
-                ball_window.setTranslationX((float) (800.0 * Math.sin(value*Math.PI)));
-                ball_window.setTranslationY((float) (30.0 * Math.cos(value*Math.PI)));
-                if (ball_pos < 211) {
-                    drop_ball(ball_window);
-                }
+            public void run() {
+
+                ball_window.setImageResource(R.drawable.ball);
+
             }
-
-        });
-        ball_curve.start();
-
-
-
-//        for(int i=0; i < 1589; i ++) {
-//            x_cor = i + 211;
-//            y_cor = get_throw_y(x_cor);
-//            x = (float) x_cor;
-//            y = (float) y_cor;
-//            ball_window.setX(1800);
-//            ball_window.setY(735);
-//            ball_handle.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Log.d("JakePlay", "[+] X CO-ORDINATE IS: " + x);
-//                    Log.d("JakePlay", "[+] Y CO-ORDINATE IS: " + y);
-//                }
-//            }, 1000);
-//        }
+        }, 1000);
     }
 
     public void drop_ball(final ImageView animating_ball) {
@@ -505,10 +509,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // TODO: Add a listener for a prolonged press. If we detect a long press then
+                // TODO: the ball will be thrown rather than rolled.
+
                 if(play_mode) {
 
                     Log.d("JakePlay", "We are now triggering button in Play Mode");
-                    throw_ball();
+                    roll_ball();
 
                 }
             }
