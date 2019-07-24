@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 ball_window.setImageResource(R.drawable.ball);
+                fetch_ball();
 
             }
         }, 1000);
@@ -195,6 +196,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 500);
 
+    }
+
+    public void fetch_ball() {
+
+
+        Handler ball_handler = new Handler();
+        final ImageView getting_ball = (ImageView) findViewById(R.id.animation_window);
+        final float end = getting_ball.getTranslationX();
+        getting_ball.setImageResource(R.drawable.dog_walk_right);
+        final AnimationDrawable grab_ball = (AnimationDrawable) getting_ball.getDrawable();
+        ObjectAnimator move_dog = ObjectAnimator.ofFloat(getting_ball, "translationX", end + 150);
+        move_dog.setDuration(2000);
+        grab_ball.start();
+        move_dog.start();
+        ball_handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getting_ball.setImageResource(R.drawable.start_dog);
+            }
+        }, 2000);
     }
 
     public void undraw_ball() {
