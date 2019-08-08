@@ -60,11 +60,77 @@ public class MainActivity extends AppCompatActivity {
     float x;
     float y;
 
+    int pee_fence = 0;
 
     boolean play_mode = false;
+    boolean is_peeing = false;
     Handler ball_wait = new Handler();
 
     // Animation methods.
+
+//    public void change_pee_fence() {
+//
+//        Log.d("Jake", "[+] >>> REACHED CHANGE BACKGROUND");
+//
+//        final Handler mini_handle = new Handler();
+//
+//        final ImageView background = (ImageView) findViewById(R.id.test_background);
+//
+//        if(pee_fence < 1) {
+//            pee_fence += 1;
+//            mini_handle.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    background.setImageResource(R.drawable.the_garden_pee1);
+//                    Log.d("Jake", "[+} CHANGED TO PEE 1");
+//                }
+//            }, 500);
+//
+//        }
+//        if(pee_fence < 2) {
+//
+//            background.setImageResource(R.drawable.the_garden_pee2);
+//            pee_fence += 1;
+//            Log.d("Jake", "[+} CHANGED TO PEE 2");
+//        }
+//        if(pee_fence < 3){
+//
+//            background.setImageResource(R.drawable.the_garden_pee3);
+//            Log.d("Jake", "[+} CHANGED TO PEE 3");
+//            pee_fence += 1;
+//
+//        }
+//
+//    }
+
+    public void dog_pees() {
+
+        final int[] pee_img = {R.drawable.the_garden_pee1,
+                R.drawable.the_garden_pee2,
+                R.drawable.the_garden_pee3};
+
+        final Handler piss_handle = new Handler();
+        final Handler background_change_handle = new Handler();
+        final ImageView background = (ImageView) findViewById(R.id.test_background);
+        is_peeing = true;
+        final ImageView dog_window = (ImageView) findViewById(R.id.animation_window);
+        dog_window.setImageResource(R.drawable.dog_walk);
+        final AnimationDrawable moving_dog = (AnimationDrawable) dog_window.getDrawable();
+        moving_dog.start();
+        dog_window.animate().x(180f).setDuration(500).start();
+        piss_handle.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dog_window.setImageResource(R.drawable.dog_pees);
+                background_change_handle.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        background.setImageResource(R.drawable.the_garden_pee3);
+                    }
+                }, 500);
+            }
+        }, 600);
+    }
 
     public void move_cloud_one () {
 
@@ -593,6 +659,16 @@ public class MainActivity extends AppCompatActivity {
                     time.reset_cont_iter();
 
                 }
+            }
+        });
+
+        clean_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getApplicationContext(), "Clean the fence please!", Toast.LENGTH_LONG)
+                        .show();
+
             }
         });
     }

@@ -19,11 +19,13 @@ public class time_thread implements Runnable {
 
     private jake passed_dog;
     private boolean interacting = false;
+    private boolean is_peeing = false;
     private MainActivity act;
     private int cont_inter = 0;
     private int seconds = 0;
     private int minutes = 0;
     private int hours = 0;
+    private int pee_count = 0;
 
     // Constructor which takes a passed dog reference as a parameter.
 
@@ -40,6 +42,15 @@ public class time_thread implements Runnable {
     public boolean get_interacting() {
 
         return interacting;
+    }
+
+    public void set_peeing(boolean y) {
+        is_peeing = y;
+    }
+
+    public boolean get_is_peeing() {
+
+        return is_peeing;
     }
 
     public void reset_cont_iter() {
@@ -103,12 +114,44 @@ public class time_thread implements Runnable {
 
                     }
 
+                    if(get_is_peeing()) {
+
+                        // We need the pee-count counter to count off the animation time.
+                        // This avoids clashing with walking and scratching animations.
+
+                        act.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if(pee_count > 4) {
+                                    set_peeing(false);
+                                }
+                                else {
+                                    pee_count += 1;
+
+                                }
+                            }
+                        });
+                    }
+
                     // Milliseconds 150ms = 15s
 
                     if (mil_sec_count % 150 == 0 ) {
 
                         passed_dog.dog_scratches();
 
+                    }
+
+                    if (mil_sec_count == 50) {
+
+                        Log.d("Jake", "DOG TEST PEE AFTER TWO MINUTES!");
+                        set_peeing(true);
+                        act.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                act.dog_pees();
+                            }
+                        });
                     }
 
                     // This IF decides whether he moves or not.
