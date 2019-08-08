@@ -174,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 ball_window.setImageResource(R.drawable.ball);
+                Log.d("Jake", "Ball X Co-ordinate: " + ball_window.getX());
+                Log.d("Jake", "Ball Y Co-ordinate: " + ball_window.getY());
                 fetch_ball();
 
             }
@@ -201,21 +203,65 @@ public class MainActivity extends AppCompatActivity {
     public void fetch_ball() {
 
 
-        Handler ball_handler = new Handler();
+        final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
+        final Handler ball_handler = new Handler();
+        final Handler inner_handler = new Handler();
+        final Handler dropped_off_ball = new Handler();
+
         final ImageView getting_ball = (ImageView) findViewById(R.id.animation_window);
-        final float end = getting_ball.getTranslationX();
+
         getting_ball.setImageResource(R.drawable.dog_walk_right);
+
         final AnimationDrawable grab_ball = (AnimationDrawable) getting_ball.getDrawable();
-        ObjectAnimator move_dog = ObjectAnimator.ofFloat(getting_ball, "translationX", end + 150);
-        move_dog.setDuration(2000);
+
+        // This starts him moving right towards the ball.
+        // TODO: Logic will go here when the ball goes to a random location.
+
         grab_ball.start();
-        move_dog.start();
+
+        // The following animation call actually moves the "moving" dog across the screen. ]
+
+        getting_ball.animate().x(1550f).setDuration(1000).start();
+
+        // A one second delay for the ball to roll to the other side of the screen.
+
         ball_handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                getting_ball.setImageResource(R.drawable.start_dog);
+                grab_ball.stop();
+                ball_window.setImageAlpha(0);
+                inner_handler.postDelayed(new Runnable() {
+
+                    // A 50 millisecond delay to "pick up" the ball.
+
+                    @Override
+                    public void run() {
+
+                        getting_ball.setImageResource(R.drawable.dog_walk);
+                        final AnimationDrawable drop_ball = (AnimationDrawable) getting_ball.getDrawable();
+                        getting_ball.animate().x(280f).setDuration(1000).start();
+                        drop_ball.start();
+                        dropped_off_ball.postDelayed(new Runnable() {
+
+                            // An 1100 millisecond delay for the dog to take the ball back to its original location.
+
+                            @Override
+                            public void run() {
+
+                                // Once back to its original spot reset X, Y and Alpha.
+
+                                getting_ball.setImageResource(R.drawable.start_dog);
+                                ball_window.setX(211f);
+                                ball_window.setY(750f);
+                                ball_window.setImageAlpha(255);
+                            }
+                        }, 1100);
+
+
+                    }
+                }, 50);
             }
-        }, 2000);
+        }, 1000);
     }
 
     public void undraw_ball() {
