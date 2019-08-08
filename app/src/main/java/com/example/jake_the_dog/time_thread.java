@@ -42,6 +42,11 @@ public class time_thread implements Runnable {
         return interacting;
     }
 
+    public void reset_cont_iter() {
+
+        cont_inter = 0;
+    }
+
     // Factory-fitted run method, which begins a counting loop and checks conditions as it counts.
 
     // This is the main time_thread which queues and executes different methods within dog, adjusting

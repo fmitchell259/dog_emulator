@@ -590,6 +590,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d("JakePlay", "We are now triggering button in Play Mode");
                     roll_ball();
+                    time.reset_cont_iter();
 
                 }
             }
