@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 grab_ball.stop();
-                ball_window.setImageAlpha(0);
+                ball_window.animate().y(650f).setDuration(100).start();
                 inner_handler.postDelayed(new Runnable() {
 
                     // A 50 millisecond delay to "pick up" the ball.
@@ -237,10 +237,17 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
+                        // Slightly lift the ball window and switch it to his other side.
+
+                        ball_window.setX(1450f);
+
+                        // Set all my animation resources for waking left.
+
                         getting_ball.setImageResource(R.drawable.dog_walk);
                         final AnimationDrawable drop_ball = (AnimationDrawable) getting_ball.getDrawable();
                         getting_ball.animate().x(280f).setDuration(1000).start();
                         drop_ball.start();
+                        ball_window.animate().x(211f).setDuration(1000).start();
                         dropped_off_ball.postDelayed(new Runnable() {
 
                             // An 1100 millisecond delay for the dog to take the ball back to its original location.
