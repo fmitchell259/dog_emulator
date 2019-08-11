@@ -123,7 +123,7 @@ public class time_thread implements Runnable {
                             @Override
                             public void run() {
 
-                                if(pee_count > 4) {
+                                if(pee_count > 2) {
                                     set_peeing(false);
                                 }
                                 else {
@@ -132,52 +132,58 @@ public class time_thread implements Runnable {
                                 }
                             }
                         });
+
+                        Thread.sleep(100);
                     }
+                    else {
 
-                    // Milliseconds 150ms = 15s
+                        // Milliseconds 150ms = 15s
 
-                    if (mil_sec_count % 150 == 0 ) {
+                        if (mil_sec_count % 150 == 0 ) {
 
-                        passed_dog.dog_scratches();
+                            passed_dog.dog_scratches();
 
-                    }
+                        }
 
-                    if (mil_sec_count == 50) {
+                        if (mil_sec_count == 50) {
 
-                        Log.d("Jake", "DOG TEST PEE AFTER TWO MINUTES!");
-                        set_peeing(true);
-                        act.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                act.dog_pees();
+                            Log.d("Jake", "DOG TEST PEE AFTER TWO MINUTES!");
+                            set_peeing(true);
+                            act.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    act.dog_pees();
+                                }
+                            });
+                        }
+
+                        // This IF decides whether he moves or not.
+                        // Measuring in milliseconds, so every 100 ms = 10s.
+
+                        if (mil_sec_count % 900 == 0) {
+
+                            // 50 / 50 whether he will walk left or right.
+                            // He walks every ten seconds.
+
+                            if (r_dir <= 2500) {
+
+                                passed_dog.walk_dog_left();
                             }
-                        });
-                    }
+                            else {
+                                passed_dog.walk_dog_right();
+                            }
 
-                    // This IF decides whether he moves or not.
-                    // Measuring in milliseconds, so every 100 ms = 10s.
-
-                    if (mil_sec_count % 900 == 0) {
-
-                        // 50 / 50 whether he will walk left or right.
-                        // He walks every ten seconds.
-
-                        if (r_dir <= 2500) {
-
-                            passed_dog.walk_dog_left();
-                        }
-                        else {
-                            passed_dog.walk_dog_right();
                         }
 
+                        if (!passed_dog.ask_alive()) {
+                            passed_dog.jake_dead();
+                            break;
+                        }
+
+                        Thread.sleep(100);
+
                     }
 
-                    if (!passed_dog.ask_alive()) {
-                        passed_dog.jake_dead();
-                        break;
-                    }
-
-                    Thread.sleep(100);
 
                 }
 
