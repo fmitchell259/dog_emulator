@@ -109,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.the_garden_pee2,
                 R.drawable.the_garden_pee3};
 
+//        final ImageView pee_window = (ImageView) findViewById(R.id.dog_pee);
+//        pee_window.setX(544f);
+//        pee_window.setY(534f);
+//        pee_window.setAlpha(0f);
+//        pee_window.setImageResource(R.drawable.dog_pees);
+
+
+//        Log.d("Jake", "PEE WINDOW X: " + pee_window.getX());
+//        Log.d("Jake", "PEE WINDOW Y: " + pee_window.getY());
+
         final Handler piss_handle = new Handler();
         final Handler background_change_handle = new Handler();
         final ImageView background = (ImageView) findViewById(R.id.test_background);
@@ -117,19 +127,25 @@ public class MainActivity extends AppCompatActivity {
         dog_window.setImageResource(R.drawable.dog_walk);
         final AnimationDrawable moving_dog = (AnimationDrawable) dog_window.getDrawable();
         moving_dog.start();
-        dog_window.animate().x(180f).setDuration(500).start();
+        dog_window.animate().x(180f).setDuration(1000).start();
         piss_handle.postDelayed(new Runnable() {
             @Override
             public void run() {
                 dog_window.setImageResource(R.drawable.dog_pees);
+                Log.d("Jake", "DOG WINDOW X: " + dog_window.getX());
+                Log.d("Jake", "DOG WINDOW Y: " + dog_window.getY());
+
                 background_change_handle.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         background.setImageResource(R.drawable.the_garden_pee3);
+                        dog_window.setImageResource(R.drawable.start_dog);
+//                        pee_window.setAlpha(0f);
+//                        dog_window.setAlpha(1f);
                     }
                 }, 500);
             }
-        }, 600);
+        }, 500);
     }
 
     public void move_cloud_one () {
