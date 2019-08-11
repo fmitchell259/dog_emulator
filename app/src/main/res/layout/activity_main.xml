@@ -90,6 +90,21 @@
         app:layout_constraintGuide_begin="387dp" />
 
     <ImageView
+        android:id="@+id/dog_pee"
+        android:layout_width="114dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/pee_box"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.73" />
+
+    <ImageView
         android:id="@+id/animation_window"
         android:layout_width="196dp"
         android:layout_height="152dp"
@@ -153,17 +168,5 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/dog_pee"
-        android:layout_width="122dp"
-        android:layout_height="227dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761"
-        tools:layout_editor_absoluteX="60dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
