@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable= "@drawable/pee1"
+        android:duration= "30" />
+    <item android:drawable= "@drawable/pee2"
+        android:duration= "30" />
+    <item android:drawable= "@drawable/pee3"
+        android:duration= "30" />
+    <item android:drawable= "@drawable/pee4"
+        android:duration= "30" />
+    <item android:drawable= "@drawable/pee5"
+        android:duration= "30" />
+    <item android:drawable= "@drawable/pee6"
+        android:duration= "30" />
+    <item android:drawable= "@drawable/pee7"
+        android:duration= "30" />
+
+</animation-list>
