@@ -2,12 +2,15 @@ package com.example.jake_the_dog;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.view.MotionEventCompat;
 import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.FlingAnimation;
 import androidx.dynamicanimation.animation.SpringAnimation;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Path;
@@ -24,6 +27,7 @@ import android.transition.ArcMotion;
 import android.transition.Transition;
 import android.transition.TransitionValues;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.PathInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -49,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
     float dist_track = 0;
     float ball_track = 0;
 
+    float deltaX;
+    float deltaY;
+    float maxValX;
+    float maxValY;
+    float first_touchX;
+    float first_touchY;
+    float currentX;
+    float currentY;
+    float SWIPE_THRESHOLD = 10.0f;
+
     float ball_pos;
 
     float parameter_x;
@@ -60,50 +74,153 @@ public class MainActivity extends AppCompatActivity {
     float x;
     float y;
 
+    int[] pee_background = {R.drawable.the_garden_pee3,
+                            R.drawable.the_garden_pee2,
+                            R.drawable.the_garden_pee1,
+                            R.drawable.the_garden};
+
+
+    float x1, x2;
+
+    int MIN_DISTANCE = 20;
+
     int pee_fence = 0;
+    int clean_fence = 1;
 
     boolean play_mode = false;
-    boolean is_peeing = false;
+    boolean has_peed = false;
+    boolean clean_mode = false;
     Handler ball_wait = new Handler();
+
+    // Method to detext what tyoe of swipe is happening. This is used so the user can clean up pee.
+
+    public void onUpSwipe(float value) {
+
+    }
+
+    public void onDownSwipe(float value) {
+
+    }
+
+    public void onRightSwipe(float value) {
+
+    }
+
+    public void onLeftSwipe(float value) {
+
+    }
+
+    public boolean onTouch(View v, MotionEvent event) {
+
+        boolean result;
+
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+
+                // Register the first touch on TouchDown and this should not change unless finger goes up.
+
+                first_touchX = event.getX();
+                first_touchY = event.getY();
+                maxValX = 0.0f;
+                maxValY = 0.0f;
+
+                // As this event is consumed return true
+
+                result = true;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+
+                // Current X/Y are the continuous changing of values of one singel touch session. Changes
+                // when finger slides on the view.
+
+                currentX = event.getX();
+                currentY = event.getY();
+
+                // Setting the maximum value of X or Y so far. Any deviation in this means a  change of
+                // direction so reset the firstTouch value to last known max value i.e MaxVal X/Y
+
+                if (maxValX < currentX) {
+
+                    maxValX = currentX;
+                }else {
+                    first_touchX = maxValX;
+                    maxValX = 0.0f;
+                }
+
+                if (maxValY < currentY) {
+
+                    maxValY = currentY;
+                }else {
+                    first_touchY = maxValY;
+                    maxValY = 0.0f;
+                }
+
+                // DeltaX/Y are the difference between current touch and the value when finger first touched screen.
+                // If its negative that means current value is on left side of first touchdown value i.e Going left and
+                // vice versa.
+
+                deltaX = currentX - first_touchX;
+                deltaY = currentY = first_touchY;
+
+                if(Math.abs(deltaX) > Math.abs(deltaY)) {
+
+                    // HORIZTONAL SWIPE.
+
+                    if(Math.abs(deltaX) > SWIPE_THRESHOLD) {
+                        if(deltaX > 0) {
+
+                            // Means we are going right.
+                            onRightSwipe(currentX);
+                        } else {
+
+                            //Means we are going left.
+                            onLeftSwipe(currentX);
+                        }
+                    }
+                } else {
+
+                    // It's a vertical swipe.
+                    if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
+                        if(deltaY > 0) {
+
+                            // Means we are going down.
+                            onDownSwipe(currentY);
+                        } else {
+
+                            // Means we are going down.
+                            onUpSwipe(currentY);
+                        }
+                    }
+                }
+
+                result = true;
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                // Clean UP
+
+                first_touchX = 0.0f;
+                first_touchY = 0.0f;
+
+                result = true;
+                break;
+
+            default:
+                result = false;
+                break;
+        }
+
+        return result;
+    }
 
     // Animation methods.
 
-//    public void change_pee_fence() {
-//
-//        Log.d("Jake", "[+] >>> REACHED CHANGE BACKGROUND");
-//
-//        final Handler mini_handle = new Handler();
-//
-//        final ImageView background = (ImageView) findViewById(R.id.test_background);
-//
-//        if(pee_fence < 1) {
-//            pee_fence += 1;
-//            mini_handle.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    background.setImageResource(R.drawable.the_garden_pee1);
-//                    Log.d("Jake", "[+} CHANGED TO PEE 1");
-//                }
-//            }, 500);
-//
-//        }
-//        if(pee_fence < 2) {
-//
-//            background.setImageResource(R.drawable.the_garden_pee2);
-//            pee_fence += 1;
-//            Log.d("Jake", "[+} CHANGED TO PEE 2");
-//        }
-//        if(pee_fence < 3){
-//
-//            background.setImageResource(R.drawable.the_garden_pee3);
-//            Log.d("Jake", "[+} CHANGED TO PEE 3");
-//            pee_fence += 1;
-//
-//        }
-//
-//    }
-
     public void dog_pees() {
+
+        has_peed = true;
 
         // Need an imageView to hold the pee animation.
 
@@ -182,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 }, 1000);
             }
         }, 1000);
+
     }
 
     public void move_cloud_one () {
@@ -510,6 +628,7 @@ public class MainActivity extends AppCompatActivity {
     // Here we need an @ statement because I want my app to go full screen.
     // This means it will not run on an API below 14.
 
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -539,6 +658,8 @@ public class MainActivity extends AppCompatActivity {
         stats_button = findViewById(R.id.stats_button);
         ball_button = findViewById(R.id.ball_button);
 
+        final ImageView pee_swipe = (ImageView) findViewById(R.id.pee_swipe);
+        final ImageView background = (ImageView) findViewById(R.id.test_background);
         final ImageView start_dog = (ImageView) findViewById(R.id.animation_window);
         start_dog.setImageResource(R.drawable.start_dog);
 
@@ -714,12 +835,100 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         clean_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplicationContext(), "Clean the fence please!", Toast.LENGTH_LONG)
-                        .show();
+
+
+                if (!has_peed) {
+
+                    Toast.makeText(getApplicationContext(), "THERE'S NO PEE ON THE FENCE!",
+                            Toast.LENGTH_LONG)
+                            .show();
+
+                }
+
+                else {
+
+                    clean_mode = true;
+
+                    Toast.makeText(getApplicationContext(), "Clean the fence please!", Toast.LENGTH_LONG)
+                            .show();
+
+                    if (clean_mode) {
+
+                        pee_swipe.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+
+                                if(!has_peed) {
+                                    Log.d("Jake", "NO PEE ON FENCE.");
+                                }
+
+                                else {
+                                    if(clean_mode) {
+                                        switch (event.getActionMasked()) {
+
+                                            case MotionEvent.ACTION_DOWN:
+                                                Log.d("Jake", "[+] YOU TOUCHED THE PEE BOX >>>");
+                                                x1 = event.getX();
+                                                return true;
+                                            case MotionEvent.ACTION_UP:
+                                                x2 = event.getX();
+                                                float deltaX = x2 - x1;
+                                                if (deltaX > MIN_DISTANCE) {
+
+                                                    clean_fence += 1;
+
+                                                    Log.d("Jake", "[+] WELL DONE YOU SWIPED >>>");
+                                                    Log.d("Jake", "[+] SWIPE COUNT IS >>> " + clean_fence);
+
+                                                    if (clean_fence % 5 == 0) {
+
+                                                        if(clean_fence == 20) {
+                                                            background.setImageResource(pee_background[(clean_fence/5) - 1]);
+                                                            Toast.makeText(getApplicationContext(), "WELL DONE! YOU CLEANED ALL THE FENCE",
+                                                                    Toast.LENGTH_LONG)
+                                                                    .show();
+                                                            has_peed = false;
+                                                            clean_fence = 1;
+                                                            clean_mode = false;
+                                                            return false;
+
+                                                        }
+                                                        else {
+
+                                                            background.setImageResource(pee_background[(clean_fence/5) - 1]);
+                                                            clean_mode = false;
+                                                            Log.d("Jake", "[+] WELL DONE YOU CLEANED SOME FENCE.");
+                                                            return false;
+
+                                                        }
+                                                    }
+
+                                                }
+                                                else {
+                                                    Log.d("Jake", "[+] YOU DIDN'T SWIPE HARD ENOUGH! >>>");
+                                                    break;
+                                                }
+                                        }
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(), "YOU ARE NOT IN CLEAN MODE!",
+                                                Toast.LENGTH_LONG)
+                                                .show();
+                                    }
+
+                                }
+                                return false;
+                            }
+                        });
+
+                    }
+                }
 
             }
         });
