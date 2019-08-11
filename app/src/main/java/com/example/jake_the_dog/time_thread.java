@@ -96,6 +96,10 @@ public class time_thread implements Runnable {
 
                 if (!interacting) {
 
+                    // We always count the seconds and drop the stats in both interacting and non-interacting.
+                    // TODO: I can move these outside the IF statement and remove them from below.
+                    // TODO: CODE REDUNDANCY HERE <<<
+
                     if(mil_sec_count % 10 == 0) {
 
                         seconds += 1;
@@ -113,6 +117,8 @@ public class time_thread implements Runnable {
 
 
                     }
+
+                    // If is_peeing is true then we skip all the arbitrary animations.
 
                     if(get_is_peeing()) {
 

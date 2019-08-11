@@ -19,4 +19,5 @@
     <string name="ball_button">Ball Button</string>
     <string name="throw_ball">THROW!</string>
     <string name="pee_box">pee Window</string>
+    <string name="pee_swipe">pee swipe</string>
 </resources>
