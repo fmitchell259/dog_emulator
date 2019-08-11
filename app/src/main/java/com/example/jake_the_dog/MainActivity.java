@@ -105,47 +105,55 @@ public class MainActivity extends AppCompatActivity {
 
     public void dog_pees() {
 
+        // A list of backgrounds showing the fence in varying states of pinkness.
+
         final int[] pee_img = {R.drawable.the_garden_pee1,
                 R.drawable.the_garden_pee2,
                 R.drawable.the_garden_pee3};
 
-//        final ImageView pee_window = (ImageView) findViewById(R.id.dog_pee);
-//        pee_window.setX(544f);
-//        pee_window.setY(534f);
-//        pee_window.setAlpha(0f);
-//        pee_window.setImageResource(R.drawable.dog_pees);
-
-
-//        Log.d("Jake", "PEE WINDOW X: " + pee_window.getX());
-//        Log.d("Jake", "PEE WINDOW Y: " + pee_window.getY());
+        // Set up my handlers to time my animations.
 
         final Handler piss_handle = new Handler();
         final Handler background_change_handle = new Handler();
+
+        // The background also changes as the fence gets dirtier so need a variable to handle that.
+
         final ImageView background = (ImageView) findViewById(R.id.test_background);
-        is_peeing = true;
+
+        // Usual dog_window variable to hold my walking animation, start_dog, dog_peeing etc.
+
         final ImageView dog_window = (ImageView) findViewById(R.id.animation_window);
         dog_window.setImageResource(R.drawable.dog_walk);
         final AnimationDrawable moving_dog = (AnimationDrawable) dog_window.getDrawable();
+
+        // Start the dog walking and THEN start the imageView moving with .animate().
+
         moving_dog.start();
         dog_window.animate().x(180f).setDuration(1000).start();
+
+        // ImageView animation to the left takes one second, so we delay one second before firing
+        // the peeing picture.
+
         piss_handle.postDelayed(new Runnable() {
             @Override
             public void run() {
                 dog_window.setImageResource(R.drawable.dog_pees);
-                Log.d("Jake", "DOG WINDOW X: " + dog_window.getX());
-                Log.d("Jake", "DOG WINDOW Y: " + dog_window.getY());
+
+                // The dog will pee for one second for now, so another handler is needed to wait one
+                // second and then change the background and dog image.
+
+                // TODO: During this time I will have pink animation coming from the dog.
 
                 background_change_handle.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         background.setImageResource(R.drawable.the_garden_pee3);
                         dog_window.setImageResource(R.drawable.start_dog);
-//                        pee_window.setAlpha(0f);
-//                        dog_window.setAlpha(1f);
+
                     }
-                }, 500);
+                }, 1000);
             }
-        }, 500);
+        }, 1000);
     }
 
     public void move_cloud_one () {
