@@ -38,11 +38,11 @@ public class jake implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(m_hunger);
-        dest.writeInt(m_thirst);
-        dest.writeInt(m_clean);
-        dest.writeInt(m_bored);
-        dest.writeInt(m_tired);
+        dest.writeDouble(m_hunger);
+        dest.writeDouble(m_thirst);
+        dest.writeDouble(m_clean);
+        dest.writeDouble(m_bored);
+        dest.writeDouble(m_tired);
         dest.writeInt( is_alive ? 1: 0);
     }
 
@@ -50,7 +50,7 @@ public class jake implements Parcelable {
 
     // Beginning of declarations of member variables and methods for jake class.
 
-    private int m_hunger, m_thirst,
+    private double m_hunger, m_thirst,
                 m_clean, m_bored,
                 m_tired;
 
@@ -89,37 +89,31 @@ public class jake implements Parcelable {
         return dog_is_scratching;
     }
 
-    public int getM_hunger() {
+    public double getM_hunger() {
         return m_hunger;
     }
 
-    public int getM_thirst() {
+    public double getM_thirst() {
         return m_thirst;
     }
 
-    public int getM_clean() {
+    public double getM_clean() {
         return m_clean;
     }
 
-    public int getM_bored() {
+    public double getM_bored() {
         return m_bored;
     }
 
-    public int getM_tired() {
+
+    public double getM_tired() {
         return m_tired;
     }
 
     public void setM_hunger(double m_hunger) {
 
-        if (this.m_hunger < 25) {
-            this.is_alive = false;
-        }
-
-        if (this.m_hunger >= 250) {
-            jake_explodes();
-        } else {
             this.m_hunger += m_hunger;
-        }
+
     }
 
     public void setM_thirst(double m_thirst) {

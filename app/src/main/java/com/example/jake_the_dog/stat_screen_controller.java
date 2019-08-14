@@ -44,13 +44,13 @@ public class stat_screen_controller extends AppCompatActivity {
         // nullPointerException is covered.
 
         @Nullable
-        int fresh_hung = fresh_dog.getM_hunger();
+        double fresh_hung = fresh_dog.getM_hunger();
         @Nullable
-        int fresh_thirst = fresh_dog.getM_thirst();
+        double fresh_thirst = fresh_dog.getM_thirst();
         @Nullable
-        int fresh_bored = fresh_dog.getM_bored();
+        double fresh_bored = fresh_dog.getM_bored();
         @Nullable
-        int fresh_clean = fresh_dog.getM_clean();
+        double fresh_clean = fresh_dog.getM_clean();
 
 
         hunger_field.setText(" " + fresh_hung);

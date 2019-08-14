@@ -67,6 +67,10 @@ public class time_thread implements Runnable {
     public void run() {
 
         int r_dir;
+        double hunger;
+        double thirst;
+        float cleanliness;
+        float bored;
 
         Log.d("Jake", "Starting Time Thread....");
 
@@ -79,6 +83,16 @@ public class time_thread implements Runnable {
 
                 // This FOR loop runs for 100 ms so I want to move the clouds every time it
                 // rolls around.
+
+                hunger = passed_dog.getM_hunger();
+                thirst = passed_dog.getM_thirst();
+
+                // TODO: IF statements to check hunger and thirst levels in order to display
+                // TODO: prompts and trigger appropriate sounds.
+
+                // TODO: Also need to check boredom and cleanliness stats and play sounds or change
+                // TODO: backgrounds or something. With boredom he should bark a lot. When dirty
+                // TODO: I need something to happen.
 
                 act.runOnUiThread(new Runnable() {
                     @Override
@@ -94,29 +108,26 @@ public class time_thread implements Runnable {
 
                 r_dir = rand_dir.nextInt(high_rand_scratch-low_rand_scratch) + low_rand_scratch;
 
+                // Counting seconds and adjusting stats.
+
+                if (mil_sec_count % 10 == 0) {
+                    seconds += 1;
+                    Log.d("Jake", seconds +
+                            " seconds have went by.");
+
+                    // Hunger and thirst go down by 0.0075 every second. This allows the dog to live
+                    // for a day and a half without food or water.
+
+                    passed_dog.setM_hunger(-0.0075);
+                    passed_dog.setM_thirst(-0.0075);
+                    passed_dog.setM_clean(-0.5);
+                    passed_dog.setM_bored(-0.5);
+
+                }
+
                 if (!interacting) {
 
                     // We always count the seconds and drop the stats in both interacting and non-interacting.
-                    // TODO: I can move these outside the IF statement and remove them from below.
-                    // TODO: CODE REDUNDANCY HERE <<<
-
-                    if(mil_sec_count % 10 == 0) {
-
-                        seconds += 1;
-                        Log.d("Jake", seconds +
-                                " seconds have went by.");
-                    }
-
-
-                    if (mil_sec_count % 20 == 0) {
-
-                        passed_dog.setM_hunger(-0.5);
-                        passed_dog.setM_thirst(-0.5);
-                        passed_dog.setM_clean(-0.5);
-                        passed_dog.setM_bored(-0.5);
-
-
-                    }
 
                     // If is_peeing is true then we skip all the arbitrary animations.
 
@@ -193,28 +204,9 @@ public class time_thread implements Runnable {
 
                 }
 
-                // So here we are asking, "is the user interacting?" and if so, skip all animations
-                // and continue to count the time down and adjust the stats.
+                // So here we are asking, "is the user interacting?" and if so, skip all animations.
 
                 else {
-
-                    if(mil_sec_count % 10 == 0) {
-
-                        seconds += 1;
-                        cont_inter += 1;
-                        Log.d("Jake", seconds +
-                                " seconds have went by while USER INTERACTING...");
-                    }
-
-                    if (mil_sec_count % 20 == 0) {
-
-                        passed_dog.setM_hunger(-0.5);
-                        passed_dog.setM_thirst(-0.5);
-                        passed_dog.setM_clean(-0.5);
-                        passed_dog.setM_bored(-0.5);
-
-
-                    }
 
                     if(cont_inter == 15) {
 

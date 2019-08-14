@@ -712,7 +712,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Jake", "Jakes hunger is " + fresh_dog.getM_hunger());
 
 
-                int hunger_thresh = fresh_dog.getM_hunger();
+                double hunger_thresh = fresh_dog.getM_hunger();
 
                 if (hunger_thresh >= 250) {
 
@@ -756,7 +756,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Jake", "You pressed the WATER button.");
                 Log.d("Jake", "The dogs thirst is: " + fresh_dog.getM_thirst());
 
-                int thirst_thresh = fresh_dog.getM_thirst();
+                double thirst_thresh = fresh_dog.getM_thirst();
 
                 if (thirst_thresh >= 250) {
                     Log.d("Jake", "oh No! Jake is drowning in Pee!");
