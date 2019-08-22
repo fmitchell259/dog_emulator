@@ -87,6 +87,8 @@ public class time_thread implements Runnable {
                 hunger = passed_dog.getM_hunger();
                 thirst = passed_dog.getM_thirst();
 
+                Log.d("Jake", "HUNGER IN TIME THREAD: " + hunger);
+
                 // TODO: IF statements to check hunger and thirst levels in order to display
                 // TODO: prompts and trigger appropriate sounds.
 
