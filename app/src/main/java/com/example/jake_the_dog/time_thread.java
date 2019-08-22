@@ -87,8 +87,6 @@ public class time_thread implements Runnable {
                 hunger = passed_dog.getM_hunger();
                 thirst = passed_dog.getM_thirst();
 
-                Log.d("Jake", "HUNGER IN TIME THREAD: " + hunger);
-
                 // TODO: IF statements to check hunger and thirst levels in order to display
                 // TODO: prompts and trigger appropriate sounds.
 
@@ -209,6 +207,10 @@ public class time_thread implements Runnable {
                 // So here we are asking, "is the user interacting?" and if so, skip all animations.
 
                 else {
+
+                    if(mil_sec_count % 10 == 0) {
+                        cont_inter += 1;
+                    }
 
                     if(cont_inter == 15) {
 
