@@ -9,11 +9,11 @@ public class jake implements Parcelable {
 
 
     protected jake(Parcel in) {
-        m_hunger = in.readInt();
-        m_thirst = in.readInt();
-        m_clean = in.readInt();
-        m_bored = in.readInt();
-        m_tired = in.readInt();
+        m_hunger = in.readDouble();
+        m_thirst = in.readDouble();
+        m_clean = in.readDouble();
+        m_bored = in.readDouble();
+        m_tired = in.readDouble();
         is_alive = in.readByte() != 0;
     }
 

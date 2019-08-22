@@ -208,6 +208,10 @@ public class time_thread implements Runnable {
 
                 else {
 
+                    if(mil_sec_count % 10 == 0) {
+                        cont_inter += 1;
+                    }
+
                     if(cont_inter == 15) {
 
                         cont_inter = 0;

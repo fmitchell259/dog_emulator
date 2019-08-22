@@ -220,85 +220,94 @@ public class MainActivity extends AppCompatActivity {
 
     public void dog_pees() {
 
-        has_peed = true;
+        if (play_mode) {
 
-        // Need an imageView to hold the pee animation.
+            Toast.makeText(getApplicationContext(), "CANNOT PEE, CURRENTLY PLAYING",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else {
 
-        final ImageView pee_window = (ImageView) findViewById(R.id.dog_pee);
+            has_peed = true;
 
-        // A list of backgrounds showing the fence in varying states of pinkness.
+            // Need an imageView to hold the pee animation.
 
-        final int[] pee_img = {R.drawable.the_garden_pee1,
-                R.drawable.the_garden_pee2,
-                R.drawable.the_garden_pee3};
+            final ImageView pee_window = (ImageView) findViewById(R.id.dog_pee);
 
-        // Set up my handlers to time my animations.
+            // A list of backgrounds showing the fence in varying states of pinkness.
 
-        final Handler piss_handle = new Handler();
-        final Handler background_change_handle = new Handler();
-        final Handler final_sit = new Handler();
+            final int[] pee_img = {R.drawable.the_garden_pee1,
+                    R.drawable.the_garden_pee2,
+                    R.drawable.the_garden_pee3};
 
-        // The background also changes as the fence gets dirtier so need a variable to handle that.
+            // Set up my handlers to time my animations.
 
-        final ImageView background = (ImageView) findViewById(R.id.test_background);
+            final Handler piss_handle = new Handler();
+            final Handler background_change_handle = new Handler();
+            final Handler final_sit = new Handler();
 
-        // Usual dog_window variable to hold my walking animation, start_dog, dog_peeing etc.
+            // The background also changes as the fence gets dirtier so need a variable to handle that.
 
-        final ImageView dog_window = (ImageView) findViewById(R.id.animation_window);
-        dog_window.setImageResource(R.drawable.dog_walk);
-        final AnimationDrawable moving_dog = (AnimationDrawable) dog_window.getDrawable();
+            final ImageView background = (ImageView) findViewById(R.id.test_background);
 
-        Log.d("Jake", "DOG WINDOW Y: " + dog_window.getY());
+            // Usual dog_window variable to hold my walking animation, start_dog, dog_peeing etc.
 
-        // Start the dog walking and THEN start the imageView moving with .animate().
+            final ImageView dog_window = (ImageView) findViewById(R.id.animation_window);
+            dog_window.setImageResource(R.drawable.dog_walk);
+            final AnimationDrawable moving_dog = (AnimationDrawable) dog_window.getDrawable();
 
-        moving_dog.start();
-        dog_window.animate().x(175f).y(470f).setDuration(1000).start();
+            Log.d("Jake", "DOG WINDOW Y: " + dog_window.getY());
 
-        Log.d("Jake", "X: " + dog_window.getX());
-        Log.d("Jake", "Y " + dog_window.getY());
+            // Start the dog walking and THEN start the imageView moving with .animate().
 
-        // ImageView animation to the left takes one second, so we delay one second before firing
-        // the peeing picture.
+            moving_dog.start();
+            dog_window.animate().x(175f).y(470f).setDuration(1000).start();
 
-        piss_handle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                pee_window.setImageResource(R.drawable.pee_animation);
-                final AnimationDrawable peeing = (AnimationDrawable) pee_window.getDrawable();
-                dog_window.setImageResource(R.drawable.dog_pees);
-                peeing.start();
-                // The dog will pee for one second for now, so another handler is needed to wait one
-                // second and then change the background and dog image.
+            Log.d("Jake", "X: " + dog_window.getX());
+            Log.d("Jake", "Y " + dog_window.getY());
 
-                // TODO: During this time I will have pink animation coming from the dog.
+            // ImageView animation to the left takes one second, so we delay one second before firing
+            // the peeing picture.
 
-                background_change_handle.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        background.setImageResource(R.drawable.the_garden_pee4);
-                        peeing.stop();
-                        pee_window.setAlpha(0f);
-                        dog_window.setImageResource(R.drawable.dog_walk_right);
-                        dog_window.animate().setDuration(250).y(534f).x(300f).start();
+            piss_handle.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    pee_window.setImageResource(R.drawable.pee_animation);
+                    final AnimationDrawable peeing = (AnimationDrawable) pee_window.getDrawable();
+                    dog_window.setImageResource(R.drawable.dog_pees);
+                    peeing.start();
+                    // The dog will pee for one second for now, so another handler is needed to wait one
+                    // second and then change the background and dog image.
 
-                        final AnimationDrawable walk_right = (AnimationDrawable) dog_window.getDrawable();
-                        walk_right.start();
+                    // TODO: During this time I will have pink animation coming from the dog.
 
-                        // Final 250ms wait that makes it look like the dog has moved slightly to the
-                        // right and then sat down.
+                    background_change_handle.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            background.setImageResource(R.drawable.the_garden_pee4);
+                            peeing.stop();
+                            pee_window.setAlpha(0f);
+                            dog_window.setImageResource(R.drawable.dog_walk_right);
+                            dog_window.animate().setDuration(250).y(534f).x(300f).start();
 
-                        final_sit.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dog_window.setImageResource(R.drawable.start_dog);
-                            }
-                        }, 500);
+                            final AnimationDrawable walk_right = (AnimationDrawable) dog_window.getDrawable();
+                            walk_right.start();
 
-                    }
-                }, 1000);
-            }
-        }, 1000);
+                            // Final 250ms wait that makes it look like the dog has moved slightly to the
+                            // right and then sat down.
+
+                            final_sit.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dog_window.setImageResource(R.drawable.start_dog);
+                                    has_peed = false;
+                                }
+                            }, 500);
+
+                        }
+                    }, 1000);
+                }
+            }, 1000);
+        }
 
     }
 
@@ -332,6 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
     public ImageView draw_ball() {
 
+        play_mode = true;
         final ImageView ball_window = (ImageView) findViewById(R.id.ball_window);
         ball_window.setImageResource(R.drawable.ball);
         ball_window.setX(211f);
@@ -798,11 +808,18 @@ public class MainActivity extends AppCompatActivity {
                 // I need to call a method within time_thread to stop the animations.
                 // If USER_SWITCH is true then skip all probabilistic animations and just count time.
 
-                ImageView ball_window = draw_ball();
-                animate_ball(ball_window, true);
-                time.set_interacting(true);
+                if(has_peed) {
 
+                    Toast.makeText(getApplicationContext(), "Can't play just now, the dog is peeing :)",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
 
+                    ImageView ball_window = draw_ball();
+                    animate_ball(ball_window, true);
+                    time.set_interacting(true);
+
+                }
 
             }
         });
