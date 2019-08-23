@@ -85,14 +85,16 @@ public class MainActivity extends AppCompatActivity {
     int MIN_DISTANCE = 20;
 
     int pee_fence = 0;
+
     int clean_fence = 1;
 
     boolean play_mode = false;
     boolean has_peed = false;
     boolean clean_mode = false;
+    boolean pee_on_fence = false;
     Handler ball_wait = new Handler();
 
-    // Method to detext what tyoe of swipe is happening. This is used so the user can clean up pee.
+    // Method to detect what type of swipe is happening. This is used so the user can clean up pee.
 
     public void onUpSwipe(float value) {
 
@@ -255,15 +257,10 @@ public class MainActivity extends AppCompatActivity {
             dog_window.setImageResource(R.drawable.dog_walk);
             final AnimationDrawable moving_dog = (AnimationDrawable) dog_window.getDrawable();
 
-            Log.d("Jake", "DOG WINDOW Y: " + dog_window.getY());
-
             // Start the dog walking and THEN start the imageView moving with .animate().
 
             moving_dog.start();
             dog_window.animate().x(175f).y(470f).setDuration(1000).start();
-
-            Log.d("Jake", "X: " + dog_window.getX());
-            Log.d("Jake", "Y " + dog_window.getY());
 
             // ImageView animation to the left takes one second, so we delay one second before firing
             // the peeing picture.
@@ -300,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
                                     dog_window.setImageResource(R.drawable.start_dog);
                                     has_peed = false;
+                                    pee_on_fence = true;
                                 }
                             }, 500);
 
@@ -346,8 +344,6 @@ public class MainActivity extends AppCompatActivity {
         ball_window.setImageResource(R.drawable.ball);
         ball_window.setX(211f);
         ball_window.setY(499f);
-        Log.d("JakePlay", " Initial Ball X >> " + ball_window.getX());
-        Log.d("JakePlay", " Initial Ball Y >> " + ball_window.getY());
         ball_window.setImageAlpha(255);
         return ball_window;
     }
@@ -671,6 +667,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageView pee_swipe = (ImageView) findViewById(R.id.pee_swipe);
         final ImageView background = (ImageView) findViewById(R.id.test_background);
         final ImageView start_dog = (ImageView) findViewById(R.id.animation_window);
+
         start_dog.setImageResource(R.drawable.start_dog);
 
         // Set up initial time thread for non-user interaction.
@@ -735,13 +732,8 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     Log.d("Jake", "Well Done! You fed the dog :)");
+
                     fresh_dog.setM_hunger(3);
-
-                    // TODO: Animation function to be programmed below.
-                    // TODO: Time_thread must get "dog_is_eating" flag to skip arbitrary animations.
-
-                    fresh_dog.jake_eats();
-
                     Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You fed the dog :)",
                             Toast.LENGTH_SHORT);
 
@@ -782,9 +774,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Jake", "Well done you watered the dog :)");
 
                     fresh_dog.setM_thirst(2);
-
-                    fresh_dog.jake_drinks();
-
                     Toast t2 = Toast.makeText(getApplicationContext(), "Thanks!, You watered the dog :)",
                             Toast.LENGTH_SHORT);
 
@@ -860,7 +849,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                if (!has_peed) {
+                if (!pee_on_fence) {
 
                     Toast.makeText(getApplicationContext(), "THERE'S NO PEE ON THE FENCE!",
                             Toast.LENGTH_LONG)
@@ -881,7 +870,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public boolean onTouch(View v, MotionEvent event) {
 
-                                if(!has_peed) {
+                                if(!pee_on_fence) {
                                     Log.d("Jake", "NO PEE ON FENCE.");
                                 }
 
@@ -910,7 +899,7 @@ public class MainActivity extends AppCompatActivity {
                                                             Toast.makeText(getApplicationContext(), "WELL DONE! YOU CLEANED ALL THE FENCE",
                                                                     Toast.LENGTH_LONG)
                                                                     .show();
-                                                            has_peed = false;
+                                                            pee_on_fence = false;
                                                             clean_fence = 1;
                                                             clean_mode = false;
                                                             return false;

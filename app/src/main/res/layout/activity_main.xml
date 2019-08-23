@@ -11,18 +11,18 @@
     <ImageView
         android:id="@+id/test_background"
         android:layout_width="0dp"
-        android:layout_height="507dp"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/background_test"
         android:cropToPadding="false"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/the_garden"
-        tools:srcCompat="@drawable/the_garden_pee4" />
+        tools:srcCompat="@drawable/copy_garden" />
 
     <Button
         android:id="@+id/water_button"
