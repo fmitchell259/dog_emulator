@@ -129,10 +129,11 @@ public class jake implements Parcelable {
     }
 
 
-    // Set Tired is only going to be used when NO USER INTERACTION occurs.
+    // TODO: Set Tired is only going to be used when NO USER INTERACTION occurs.
 
     public void setM_tired(int m_tired) {
         this.m_tired += m_tired;
+
     }
 
 
@@ -155,9 +156,6 @@ public class jake implements Parcelable {
 
         is_alive = true;
 
-        // TODO: 2019-06-06 Add animation for this method. This should NOT affect the stats. It is
-        //                  purley to make jake move. These stats are looked after in the time thread.
-
     }
 
     public void jake_drowns() {
@@ -168,32 +166,6 @@ public class jake implements Parcelable {
         Log.d("Jake", "He drowned in pee :(");
     }
 
-    public void jake_plays() {
-
-        // TODO: 2019-06-06 Jake plays here, this should directly affect his stats. However, this
-        //                  should not be adjusted here. Within the time thread, while jake is "playing"
-        //                  his stats should reflect that. This method should just launch his animation.
-
-    }
-
-    public void jake_eats() {
-
-        // TODO: 2019-06-06 Animate Jake eating, make the call to effect stats within the time thread.
-        //                  The time thread will count how many seconds each animation is fired for.
-        //                  I may need to add a parameter to these functions (time).
-    }
-
-    public void jake_drinks() {
-
-        // TODO: 2019-06-06 Similiar deal here, the time thread will count how long to animate for.
-        //                  That thread will also call the method to adjust stats accordingly.
-    }
-
-    public void clean_jake() {
-
-        // TODO: This could be an interactive animation where you swipe the creen back and forth to
-        //       to clean Jake. Stats adjusted by the time thread.
-    }
 
     public  void jake_learns() {
 
