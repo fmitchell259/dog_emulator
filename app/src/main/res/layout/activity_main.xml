@@ -20,9 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/the_garden"
-        tools:srcCompat="@drawable/copy_garden" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/water_button"
@@ -141,7 +139,7 @@
         android:contentDescription="@string/cloud_one"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cloud_one" />
+        app:srcCompat="@mipmap/cloud_one" />
 
     <ImageView
         android:id="@+id/cloud_two"
@@ -153,7 +151,7 @@
         android:contentDescription="@string/cloud_two"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cloud_two" />
+        app:srcCompat="@mipmap/cloud_two" />
 
     <Button
         android:id="@+id/ball_button"

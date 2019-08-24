@@ -74,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
     float x;
     float y;
 
-    int[] pee_background = {R.drawable.the_garden_pee3,
-                            R.drawable.the_garden_pee2,
-                            R.drawable.the_garden_pee1,
-                            R.drawable.the_garden};
+    int[] pee_background = {R.mipmap.the_garden_pee3,
+                            R.mipmap.the_garden_pee2,
+                            R.mipmap.the_garden_pee1,
+                            R.mipmap.the_garden};
 
 
     float x1, x2;
@@ -237,9 +237,9 @@ public class MainActivity extends AppCompatActivity {
 
             // A list of backgrounds showing the fence in varying states of pinkness.
 
-            final int[] pee_img = {R.drawable.the_garden_pee1,
-                    R.drawable.the_garden_pee2,
-                    R.drawable.the_garden_pee3};
+            final int[] pee_img = {R.mipmap.the_garden_pee1,
+                    R.mipmap.the_garden_pee2,
+                    R.mipmap.the_garden_pee3};
 
             // Set up my handlers to time my animations.
 
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                     background_change_handle.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            background.setImageResource(R.drawable.the_garden_pee4);
+                            background.setImageResource(R.mipmap.the_garden_pee4);
                             peeing.stop();
                             pee_window.setAlpha(0f);
                             dog_window.setImageResource(R.drawable.dog_walk_right);
@@ -644,7 +644,7 @@ public class MainActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
@@ -669,6 +669,8 @@ public class MainActivity extends AppCompatActivity {
         final ImageView start_dog = (ImageView) findViewById(R.id.animation_window);
 
         start_dog.setImageResource(R.drawable.start_dog);
+
+        background.setImageResource(R.mipmap.the_garden);
 
         // Set up initial time thread for non-user interaction.
 
@@ -742,7 +744,9 @@ public class MainActivity extends AppCompatActivity {
                     toast_handle.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "Hunger to: " + fresh_dog.getM_hunger(),
+                            final int print_hunger;
+                            print_hunger = (int) fresh_dog.getM_hunger();
+                            Toast.makeText(getApplicationContext(), "Hunger to: " + print_hunger,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }, 2700);
@@ -782,7 +786,9 @@ public class MainActivity extends AppCompatActivity {
                     toast_handle.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "Thirst to: " + fresh_dog.getM_thirst(),
+                            final int print_thirst;
+                            print_thirst = (int) fresh_dog.getM_thirst();
+                            Toast.makeText(getApplicationContext(), "Thirst to: " + print_thirst,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }, 2700);
