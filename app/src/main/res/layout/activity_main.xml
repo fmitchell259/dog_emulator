@@ -14,13 +14,14 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/background_test"
-        android:cropToPadding="false"
+        android:cropToPadding="true"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@mipmap/the_garden" />
 
     <Button
         android:id="@+id/water_button"
@@ -88,6 +89,30 @@
         app:layout_constraintGuide_begin="387dp" />
 
     <ImageView
+        android:id="@+id/cloud_two"
+        android:layout_width="173dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginRight="260dp"
+        android:contentDescription="@string/cloud_two"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/cloud_two" />
+
+    <ImageView
+        android:id="@+id/cloud_one"
+        android:layout_width="186dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/cloud_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/cloud_one" />
+
+    <ImageView
         android:id="@+id/dog_pee"
         android:layout_width="114dp"
         android:layout_height="102dp"
@@ -128,30 +153,6 @@
         android:contentDescription="@string/ball"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/cloud_one"
-        android:layout_width="186dp"
-        android:layout_height="98dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/cloud_one"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/cloud_one" />
-
-    <ImageView
-        android:id="@+id/cloud_two"
-        android:layout_width="173dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="260dp"
-        android:layout_marginRight="260dp"
-        android:contentDescription="@string/cloud_two"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/cloud_two" />
 
     <Button
         android:id="@+id/ball_button"
